@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+<title>SPLIT SECOND — fast track · resus · gas lab</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bungee&display=swap" rel="stylesheet">
+<style>
+:root{
+ --ink:#1f2733; --dim:#5d6b80; --card:#ffffff;
+ --ft:#8b46c9; --rs:#0fa693; --gas:#e8890c;
+ --grn:#18b95f; --red:#e8384f; --sky:#2f9bf2; --amb:#ffb02e; --gold:#ffcf3f;
+ --fB:'Bungee',system-ui,sans-serif; --fs:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+ --sat:env(safe-area-inset-top,0px); --sab:env(safe-area-inset-bottom,0px);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{background:#0e1420;font-family:var(--fs);color:var(--ink);overflow:hidden;touch-action:manipulation;
+ user-select:none;-webkit-user-select:none;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer;touch-action:manipulation}
+#app{position:fixed;top:0;right:0;bottom:0;left:0;display:flex;justify-content:center;background:#0e1420}
+#col{position:relative;width:min(520px,100%);height:100%;overflow:hidden;background:#dfe8f2}
+#world{position:absolute;top:0;right:0;bottom:0;left:0;z-index:0}
+.lay{position:absolute;top:0;right:0;bottom:0;left:0;display:none;flex-direction:column;z-index:3}
+.lay.on{display:flex}
+/* ---------- TITLE ---------- */
+#lay-title{align-items:center;text-align:center;padding:14px 20px;background:rgba(14,20,32,.30);overflow-y:auto;-webkit-overflow-scrolling:touch}
+#lay-title::before,#lay-title::after{content:"";flex:1 0 12px}
+#tcard{background:#fff;border-radius:22px;padding:26px 26px 22px;box-shadow:0 22px 54px rgba(10,20,40,.45);max-width:400px}
+#tlogo{font-family:var(--fB);font-size:clamp(34px,10vw,46px);line-height:1.02;letter-spacing:1px;
+ background:linear-gradient(120deg,var(--ft),var(--rs) 55%,var(--gas));-webkit-background-clip:text;background-clip:text;color:transparent}
+#tsub{font-family:var(--fB);font-size:12px;color:var(--dim);margin-top:8px;letter-spacing:1px}
+#thow{font-size:14.5px;color:#43506a;line-height:1.6;margin:14px 0 18px}
+#thow b{color:var(--red)}
+#playbtn{font-family:var(--fB);font-size:17px;color:#fff;background:linear-gradient(180deg,#ff5c39,#ee3d63);
+ padding:16px 30px;border-radius:16px;box-shadow:0 7px 0 #b32347,0 14px 30px rgba(238,61,99,.4);animation:btnglow 1.5s ease-in-out infinite;letter-spacing:1px}
+#playbtn:active{transform:translateY(6px);box-shadow:0 1px 0 #b32347}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.72}}
+#tbest{font-family:var(--fB);font-size:11px;color:var(--gas);margin-top:14px;min-height:14px}
+#tsnd{font-family:var(--fB);font-size:10px;color:var(--dim);border:2px solid #dfe4ee;border-radius:10px;padding:8px 13px;margin-top:10px;background:#f6f8fc}
+#tcred{font-size:10.5px;color:#8b96ab;line-height:1.6;margin-top:14px;max-width:360px}
+#tcred b{color:#5d6b80}
+/* ---------- GAME ---------- */
+#lay-game{background:transparent}
+#hud{display:flex;align-items:center;gap:10px;padding:calc(10px + var(--sat)) 14px 4px}
+#hscore{font-family:var(--fB);font-size:19px;color:#fff;text-shadow:0 2px 0 rgba(20,30,55,.5)}
+#hcombo{font-family:var(--fB);font-size:12px;color:var(--gold);margin-left:auto;opacity:0;transform:scale(.8);transition:all .18s;
+ text-shadow:0 2px 0 rgba(20,30,55,.5)}
+#hcombo.on{opacity:1;transform:scale(1)}
+#hlives{display:flex;gap:6px}
+.bb{width:16px;height:16px;border-radius:50%;border:3px solid #fff;box-shadow:0 2px 5px rgba(0,0,0,.3);transition:background .2s}
+.bb.used{background:var(--red);border-color:var(--red)}
+#prompt{margin:4px 12px 0;background:#fff;border-radius:14px;padding:10px 14px;
+ box-shadow:0 8px 22px rgba(15,28,55,.28);position:relative}
+#prompt::before{content:"";position:absolute;left:14px;right:14px;top:0;height:5px;border-radius:0 0 5px 5px;background:var(--tcol,var(--ft))}
+#ptag{font-family:var(--fB);font-size:9px;letter-spacing:1.5px;color:var(--tcol,var(--ft));margin-bottom:3px}
+#ptext{font-size:16.5px;line-height:1.35;font-weight:700}
+#signs{display:flex;gap:10px;margin:8px 12px 0}
+.sign{flex:1;min-height:58px;background:#fff;border-radius:14px;padding:8px 10px;display:flex;align-items:center;justify-content:center;
+ text-align:center;font-family:var(--fB);font-size:clamp(11px,3.4vw,14px);line-height:1.25;letter-spacing:.4px;
+ border-bottom:5px solid;box-shadow:0 7px 18px rgba(15,28,55,.28);transition:transform .12s}
+#sL{border-color:var(--amb);color:#8a5a00}
+#sR{border-color:var(--sky);color:#0d5a9e}
+.sign.pick{transform:scale(1.06)}
+.sign .dir{display:block;font-size:10px;color:var(--dim);letter-spacing:2px;margin-top:2px}
+#gates{position:absolute;top:0;right:0;bottom:0;left:0;pointer-events:none;z-index:2}
+.gate{position:absolute;left:0;top:0;font-family:var(--fB);color:#fff;text-align:center;
+ padding:9px 12px;border-radius:12px;letter-spacing:.5px;line-height:1.15;white-space:nowrap;max-width:46vw;overflow:hidden;text-overflow:ellipsis;
+ box-shadow:0 8px 20px rgba(15,28,55,.35),inset 0 -4px 0 rgba(0,0,0,.18);will-change:transform;transform-origin:center bottom}
+.gate.L{background:linear-gradient(180deg,#ffc14d,#f09a12)}
+.gate.R{background:linear-gradient(180deg,#54b1ff,#1f86e0)}
+.gate .pole{position:absolute;left:50%;bottom:-14px;width:6px;height:14px;background:rgba(0,0,0,.25);transform:translateX(-50%);border-radius:3px}
+#stampzone{position:absolute;top:0;right:0;bottom:0;left:0;display:flex;align-items:center;justify-content:center;pointer-events:none;z-index:6}
+.stamp{font-family:var(--fB);font-size:clamp(22px,6.6vw,30px);letter-spacing:1px;color:#fff;padding:12px 22px;border-radius:16px;
+ transform:rotate(-8deg) scale(2.6);opacity:0;box-shadow:0 14px 34px rgba(15,28,55,.4),inset 0 -5px 0 rgba(0,0,0,.2);white-space:nowrap;max-width:92%}
+.stamp.g{background:linear-gradient(180deg,#2fd97e,#12a552)}
+.stamp.r{background:linear-gradient(180deg,#ff5a6e,#d92742)}
+.stamp.hit{animation:slam .4s cubic-bezier(.25,1.7,.4,1) forwards}
+@keyframes slam{0%{opacity:0;transform:rotate(-8deg) scale(2.6)}55%{opacity:1;transform:rotate(-6deg) scale(.94)}
+ 100%{opacity:1;transform:rotate(-7deg) scale(1)}}
+#fx{position:absolute;top:0;right:0;bottom:0;left:0;pointer-events:none;z-index:8}
+.pop{position:absolute;font-family:var(--fB);font-size:16px;color:#fff;white-space:nowrap;
+ text-shadow:0 2px 0 rgba(20,30,55,.5),0 0 14px rgba(47,217,126,.7);animation:popup .8s ease-out forwards}
+.pop.big{font-size:21px;color:var(--gold)}
+@keyframes popup{0%{opacity:0;transform:translate(-50%,10px) scale(.6)}20%{opacity:1;transform:translate(-50%,-4px) scale(1.15)}
+ 100%{opacity:0;transform:translate(-50%,-54px) scale(1)}}
+/* ---------- WAVE (double doors) ---------- */
+#lay-wave{z-index:5;pointer-events:none}
+#dL,#dR{position:absolute;top:0;bottom:0;width:52%;background:linear-gradient(180deg,#f2f5fa,#d8e0ec);
+ box-shadow:inset 0 0 0 6px #c3cede,inset 0 0 60px rgba(60,80,120,.25);display:flex;align-items:center;justify-content:center}
+#dL{left:-55%}#dR{right:-55%}
+#dL::after,#dR::after{content:"";width:18px;height:120px;border-radius:10px;background:#aab6c9}
+#lay-wave.slam #dL{animation:doorL 1.5s cubic-bezier(.6,0,.3,1) forwards}
+#lay-wave.slam #dR{animation:doorR 1.5s cubic-bezier(.6,0,.3,1) forwards}
+@keyframes doorL{0%{left:-55%}28%{left:0}72%{left:0}100%{left:-55%}}
+@keyframes doorR{0%{right:-55%}28%{right:0}72%{right:0}100%{right:-55%}}
+#wbadge{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%);text-align:center;opacity:0}
+#lay-wave.slam #wbadge{animation:wb 1.5s ease forwards}
+@keyframes wb{0%,22%{opacity:0;transform:translate(-50%,-50%) scale(.6)}34%{opacity:1;transform:translate(-50%,-50%) scale(1.06)}
+ 66%{opacity:1;transform:translate(-50%,-50%) scale(1)}100%{opacity:0;transform:translate(-50%,-50%) scale(1.2)}}
+#wnum{font-family:var(--fB);font-size:12px;color:var(--dim);letter-spacing:2px}
+#wname{font-family:var(--fB);font-size:clamp(26px,8vw,36px);color:var(--tcol,var(--ft));margin-top:6px;letter-spacing:1px;
+ text-shadow:0 3px 0 rgba(20,30,55,.15)}
+#wsub{font-size:15px;color:#43506a;font-weight:600;margin-top:4px}
+/* ---------- INTEL ---------- */
+#lay-intel{background:rgba(14,20,32,.45);-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);z-index:7;
+ padding:calc(16px + var(--sat)) 14px calc(16px + var(--sab));overflow-y:auto}
+#iwrap{margin:auto;width:100%;max-width:430px;animation:izoom .35s cubic-bezier(.2,1.5,.4,1)}
+@keyframes izoom{0%{transform:scale(.5) rotate(-3deg);opacity:0}100%{transform:scale(1) rotate(0);opacity:1}}
+#icard{background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 22px 54px rgba(10,20,40,.5)}
+#ihead{background:linear-gradient(180deg,#ff5a6e,#d92742);color:#fff;font-family:var(--fB);font-size:13px;
+ letter-spacing:1.5px;text-align:center;padding:11px}
+#ibody{padding:14px 15px}
+#ip{font-size:16.5px;font-weight:700;line-height:1.4;margin-bottom:11px}
+.ich{padding:10px 12px;border-radius:11px;font-family:var(--fB);font-size:12.5px;letter-spacing:.4px;margin-bottom:7px;color:#fff}
+.ich.right{background:linear-gradient(180deg,#2fd97e,#12a552)}
+.ich.chose{background:linear-gradient(180deg,#ff8a97,#e05a6c)}
+#iwhy{margin-top:10px;padding:11px 12px;border-radius:11px;background:#fff6e3;border:2px dashed var(--amb);
+ font-size:13.5px;line-height:1.55;color:#6b4c12}
+#itap{font-family:var(--fB);font-size:11px;letter-spacing:1px;color:#fff;text-align:center;margin-top:14px;animation:pulse 1.2s infinite;
+ text-shadow:0 2px 0 rgba(20,30,55,.5)}
+/* ---------- OVER ---------- */
+#lay-over{background:rgba(14,20,32,.4);z-index:8;overflow-y:auto;padding:calc(18px + var(--sat)) 14px calc(18px + var(--sab))}
+#osheet{margin:auto;width:100%;max-width:440px;background:#fff;border-radius:20px;padding:20px 16px;
+ box-shadow:0 24px 60px rgba(10,20,40,.5);text-align:center;animation:izoom .4s cubic-bezier(.2,1.5,.4,1)}
+#otitle{font-family:var(--fB);font-size:clamp(20px,6.4vw,27px);letter-spacing:.5px;line-height:1.3}
+#osub{font-size:14.5px;color:var(--dim);font-weight:600;margin-top:3px}
+#rank{font-family:var(--fB);font-size:44px;width:94px;height:94px;display:flex;align-items:center;justify-content:center;
+ margin:16px auto 8px;border-radius:22px;color:#fff;transform:rotate(-6deg);animation:rankstamp .45s cubic-bezier(.3,1.8,.4,1);
+ box-shadow:0 10px 26px rgba(15,28,55,.3),inset 0 -6px 0 rgba(0,0,0,.18)}
+@keyframes rankstamp{0%{transform:rotate(-6deg) scale(2.4);opacity:0}100%{transform:rotate(-6deg) scale(1);opacity:1}}
+.rS{background:linear-gradient(180deg,#ffd95e,#f0a90f)}
+.rA{background:linear-gradient(180deg,#2fd97e,#12a552)}
+.rB{background:linear-gradient(180deg,#54b1ff,#1f86e0)}
+.rC{background:linear-gradient(180deg,#9aa7ba,#76839a)}
+.rD{background:linear-gradient(180deg,#ff5a6e,#d92742)}
+#ostats{display:flex;gap:7px;justify-content:center;flex-wrap:wrap;margin:12px 0 4px}
+.stat{background:#f4f7fb;border-radius:12px;padding:9px 12px;min-width:82px;border:2px solid #e4eaf3}
+.stat .l{font-family:var(--fB);font-size:8px;letter-spacing:1px;color:var(--dim)}
+.stat .v{font-family:var(--fB);font-size:16px;margin-top:3px}
+#obest{font-family:var(--fB);font-size:11px;color:var(--gas);margin:6px 0 12px;min-height:14px}
+#obtns{display:flex;gap:9px;justify-content:center;margin-bottom:12px}
+.obtn{font-family:var(--fB);font-size:13px;letter-spacing:.5px;padding:14px 18px;border-radius:13px;color:#fff;
+ background:linear-gradient(180deg,#ff5c39,#ee3d63);box-shadow:0 5px 0 #b32347}
+.obtn.alt{background:#f4f7fb;color:var(--dim);box-shadow:0 5px 0 #cfd8e4}
+.obtn:active{transform:translateY(4px);box-shadow:none}
+#omiss{text-align:left;margin-top:4px}
+#omiss h4{font-family:var(--fB);font-size:10px;letter-spacing:1.5px;color:var(--dim);margin-bottom:7px}
+.mrow{background:#f7f9fc;border:2px solid #e4eaf3;border-radius:11px;padding:9px 11px;margin-bottom:6px;font-size:12.6px;line-height:1.5}
+.mrow b{color:var(--grn)}
+.shake{animation:shk .3s}
+@keyframes shk{0%,100%{transform:translate(0,0)}20%{transform:translate(-9px,2px)}45%{transform:translate(8px,-2px)}70%{transform:translate(-5px,1px)}}
+@media (min-width:521px){#col{height:min(100%,900px);align-self:center;border-radius:16px}}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.001s!important;transition-duration:.001s!important}}
+#bootbar{position:absolute;left:10px;right:10px;top:calc(10px + var(--sat));z-index:99;background:#ffe9b0;color:#5b4200;font:600 12.5px/1.5 system-ui,-apple-system,sans-serif;padding:11px 13px;border-radius:11px;box-shadow:0 8px 22px rgba(0,0,0,.4)}
+#errbar{display:none;position:absolute;left:10px;right:10px;bottom:calc(10px + var(--sab));z-index:99;background:#3a0d14;color:#ffb4bc;font:11.5px/1.5 ui-monospace,Menlo,monospace;padding:10px 12px;border-radius:10px;white-space:pre-wrap}
+@keyframes btnglow{0%,100%{box-shadow:0 7px 0 #b32347,0 14px 26px rgba(238,61,99,.35)}50%{box-shadow:0 7px 0 #b32347,0 14px 46px rgba(238,61,99,.8)}}
+</style>
+</head>
+<body>
+<div id="app"><div id="col">
+ <div id="bootbar">If START does nothing, this viewer has JavaScript switched off (mail previews do this). Tap the <b>Share</b> icon → <b>Open in Safari</b> on iPhone, or the <b>⋮ menu → Open in browser</b> on Android / Outlook — then it plays.</div>
+ <div id="errbar"></div>
+ <script>document.getElementById("bootbar").style.display="none";</script>
+ <canvas id="world"></canvas>
+
+ <section class="lay on" id="lay-title">
+  <div id="tcard">
+   <div id="tlogo">SPLIT SECOND</div>
+   <div id="tsub">FAST TRACK · RESUS · GAS LAB</div>
+   <div id="thow">Sprint the ED corridor — it <b>forks into two tracks</b>. Swipe or tap onto the right one and you burst straight through.
+    Three wrong tracks and <b>the PD wants a word</b>. Missed calls circle back.</div>
+   <button id="playbtn">▶ CLOCK IN</button>
+   <div id="tbest"></div>
+   <button id="tsnd">SOUND: ON</button>
+   <div id="tcred">Built from the <b>Aug 5 Wednesday Conference</b> · URI fast-track: <b>Brian Chastain, PGY-4</b> ·
+    Vent management: <b>Sophie Karwoska Kligler, PGY-4</b> · Blood-gas workshop: <b>faculty</b> ·
+    24 forks per run, drawn from 66 — every run different. Educational game; defer to clinical judgment. REPLAY · Conference, Playable.</div>
+  </div>
+ </section>
+
+ <section class="lay" id="lay-game">
+  <div id="hud"><div id="hscore">0</div><div id="hcombo">STREAK ×0</div><div id="hlives"></div></div>
+  <div id="prompt"><div id="ptag">FAST TRACK · CH-101</div><div id="ptext">—</div></div>
+  <div id="signs">
+   <button class="sign" id="sL">—<span class="dir">◀ LEFT TRACK</span></button>
+   <button class="sign" id="sR">—<span class="dir">RIGHT TRACK ▶</span></button>
+  </div>
+  <div id="gates"></div>
+  <div id="stampzone"></div>
+  <div id="fx"></div>
+ </section>
+
+ <section class="lay" id="lay-wave">
+  <div id="dL"></div><div id="dR"></div>
+  <div id="wbadge"><div id="wnum">ROUND 1 / 3</div><div id="wname">FAST TRACK</div><div id="wsub">—</div></div>
+ </section>
+
+ <section class="lay" id="lay-intel">
+  <div id="iwrap"><div id="icard"><div id="ihead">✘ BOUNCE-BACK</div><div id="ibody">
+   <div id="ip">—</div><div id="ichs"></div><div id="iwhy">—</div>
+  </div></div><div id="itap">TAP — BACK ON THE FLOOR</div></div>
+ </section>
+
+ <section class="lay" id="lay-over">
+  <div id="osheet">
+   <div id="otitle">SHIFT COMPLETE</div><div id="osub">sign-out accepted</div>
+   <div id="rank" class="rA">A</div>
+   <div id="ostats"></div><div id="obest"></div>
+   <div id="obtns"><button class="obtn" id="o-retry">▶ NEXT SHIFT</button><button class="obtn alt" id="o-title">TITLE</button></div>
+   <div id="omiss"><h4>STUDY THE MISSES</h4><div id="omlist"></div></div>
+  </div>
+ </section>
+
+</div></div>
+<script>
+"use strict";
+try{document.getElementById("bootbar").style.display="none";}catch(e){}
+window.onerror=function(m,src,l,c){try{var e=document.getElementById("errbar");e.style.display="block";e.textContent="⚠ "+m+"  ("+l+":"+c+") — screenshot this and send it";}catch(x){}return false;};
+const DECK=[{"t":0,"p":"Day 11 of bronchitis. Vitals normal, lungs nothing focal.","ok":"NO WORKUP","no":"CXR + LABS","w":"CHEST guideline: no routine CXR, labs, sputum cultures, viral PCR, CRP, or procalcitonin when the working diagnosis is acute bronchitis."},{"t":0,"p":"Acute bronchitis — but the sputum is PURULENT.","ok":"STILL NO ABX","no":"AZITHROMYCIN","w":"Two Cochrane reviews of 11 RCTs each: antibiotics don't help acute bronchitis — even with purulent sputum."},{"t":0,"p":"Post-URI cough. How long can it normally drag on?","ok":"UP TO 3 WEEKS","no":"5 DAYS MAX","w":"Bronchitis cough can persist up to three weeks. Duration alone isn't failure."},{"t":0,"p":"Sore throat, Centor 4. Rapid strep is cooking.","ok":"WAIT FOR THE TEST","no":"EMPIRIC PENICILLIN","w":"Straight off the slide: do NOT empirically treat without testing. Score ≥3 earns a swab, not a script."},{"t":0,"p":"Centor scoring: the patient HAS a cough. That's…","ok":"ZERO POINTS","no":"+1 POINT","w":"Cough ABSENT scores +1. Cough present scores 0 — cough pushes you away from strep."},{"t":0,"p":"Centor scoring: the patient is 47 years old.","ok":"MINUS 1","no":"PLUS 1","w":"Age ≥45 scores −1. (3–14 is +1; 15–44 is 0.)"},{"t":0,"p":"Rapid strep: POSITIVE.","ok":"PEN V × 10 DAYS","no":"Z-PACK × 5 DAYS","w":"GAS pharyngitis: penicillin V or amoxicillin for a full 10 days. Macrolides are for true allergy."},{"t":0,"p":"Sinus pressure day 6, green drainage — but improving daily.","ok":"VIRAL — NO ABX","no":"AMOX-CLAV","w":"Purulence ≠ bacteria. She meets zero ABRS criteria: not ≥10 days, not severe-onset, no double-worsening."},{"t":0,"p":"URI improved… then NEW fever and worse pain on day 9.","ok":"ABRS — TREAT","no":"GIVE IT MORE TIME","w":"“Double worsening” — improvement then new deterioration — is a bacterial criterion all by itself."},{"t":0,"p":"ABRS confirmed. First-line antibiotic?","ok":"AMOX ± CLAV 5–7d","no":"LEVOFLOXACIN","w":"Amoxicillin or amoxicillin-clavulanate for 5–7 days. Save the fluoroquinolone."},{"t":0,"p":"Fever 102.5°F + purulent drainage, 3 days straight from onset.","ok":"ABRS — TREAT","no":"STILL VIRAL","w":"Severe onset — fever ≥102°F plus purulent drainage ≥3 consecutive days — is the second ABRS criterion."},{"t":0,"p":"Can barely open his jaw. Hot-potato voice. Uvula pushed right.","ok":"ED — CT W/ CONTRAST","no":"AUGMENTIN + CLINIC","w":"Peritonsillar abscess. Trismus (OR 2.4) and palatal bulge (OR 29.7) are the strongest predictors. Imaging + drainage today."},{"t":0,"p":"Stridor, drooling, tripoding — but the pharynx looks almost normal.","ok":"ED NOW — AIRWAY","no":"CT FIRST","w":"Epiglottitis. Keep them calm and upright — never park an unstable airway in a scanner."},{"t":0,"p":"Pharyngitis 10 days ago. Now septic with ONE swollen, tender neck.","ok":"LEMIERRE — ED","no":"RECURRENT STREP","w":"Septic thrombophlebitis of the internal jugular after pharyngitis, throwing septic emboli. CT neck with IV contrast, IV abx, admit."},{"t":0,"p":"71 yo: T 38.7, RR 25, SpO2 93%, focal crackles.","ok":"GET THE CXR","no":"NO WORKUP","w":"Fever >38° with abnormal vitals, focal findings, elderly — three separate CXR triggers on one chart."},{"t":0,"p":"Borderline cough story… CRP comes back at 6.","ok":"PNA LESS LIKELY","no":"MEANS NOTHING","w":"From the talk: CRP <10 further decreases the likelihood of pneumonia when you're on the fence."},{"t":0,"p":"Flu day 1 in a 58 yo asthmatic.","ok":"SWAB — IT MATTERS","no":"NO TEST NEEDED","w":"Swab when the result changes management: antiviral candidacy (he's high-risk, in the window), cohorting, high-risk patients."},{"t":0,"p":"3-year-old with a cold. Mom holds up multi-symptom cold syrup.","ok":"NEVER UNDER 4","no":"HALF THE DOSE","w":"No OTC cough-and-cold meds under age 4 — full stop. Saline, honey (≥1 y), vapor rub (≥2 y), APAP, ibuprofen (≥6 mo)."},{"t":0,"p":"Honey for cough — minimum age?","ok":"1 YEAR","no":"ANY AGE","w":"Honey ≥1 year: 1–2 tablespoons in a warm drink, genuinely decent evidence. Under one: botulism risk."},{"t":0,"p":"Adult begs for codeine cough syrup.","ok":"DENY","no":"APPROVE","w":"Codeine: no better than placebo for cough (RCT of 82 adults). All downside."},{"t":0,"p":"Antihistamine + analgesic + decongestant COMBO for a cold.","ok":"NNT ≈ 4 — WORKS","no":"USELESS","w":"Monotherapy antihistamine fails, but the combo has a number-needed-to-treat around 4 for symptom improvement. Upgrade, don't refuse."},{"t":0,"p":"Patient wants albuterol for a cough. Zero wheeze.","ok":"NO EVIDENCE","no":"SURE, WHY NOT","w":"From the talk: essentially no evidence for albuterol in acute cough unless there's underlying bronchoconstriction."},{"t":0,"p":"Oxymetazoline nasal spray — hard stop at…","ok":"3 DAYS","no":"2 WEEKS","w":"Max 3 days or you trade congestion for rebound congestion (rhinitis medicamentosa)."},{"t":0,"p":"Vitamin C megadose — symptoms started yesterday.","ok":"NO EFFECT","no":"SHORTENS IT","w":"Cochrane, 29 RCTs: once symptoms have started, vitamin C doesn't change duration or severity."},{"t":1,"p":"Intubated COPD. Your whole focus is…","ok":"EXHALATION TIME","no":"OXYGENATION","w":"Match the vent to why you intubated. Hypercarbic failure = give the lung time to exhale."},{"t":1,"p":"Obstruction: the two knobs that matter.","ok":"RATE + TIDAL VOL","no":"FiO2 + PEEP","w":"Hypercarbic failure is managed with RR and Vt. FiO2/PEEP is the hypoxic-failure pair."},{"t":1,"p":"Vent rate for the COPD lung:","ok":"8–12 / MIN","no":"18–24 / MIN","w":"Low rate protects exhalation time. More rate = less time to empty = auto-PEEP."},{"t":1,"p":"Target I:E for obstruction:","ok":"1:4 – 1:5","no":"1:1","w":"Prolong expiration via high inspiratory flow and short inspiratory time."},{"t":1,"p":"Need a shorter inspiratory time. Which knob?","ok":"RAISE THE FLOW","no":"RAISE THE PEEP","w":"Higher inspiratory flow hits the tidal volume faster, buying expiratory time."},{"t":1,"p":"Vented COPD: pCO2 78, pH compensated. You…","ok":"TOLERATE IT","no":"CRANK THE RATE","w":"Permissive hypercapnia: accept elevated pCO2 with a compensated low pH rather than ventilating to normal."},{"t":1,"p":"Expiratory flow never returns to baseline before the next breath.","ok":"BREATH STACKING","no":"NORMAL TRACE","w":"That waveform IS dynamic hyperinflation — auto-PEEP building breath by breath."},{"t":1,"p":"Vented asthmatic: NEW hypotension, no other explanation.","ok":"THINK AUTO-PEEP","no":"MUST BE SEPSIS","w":"Rising intrathoracic pressure kills venous return. Unexplained hypotension after intubation = stacking until proven otherwise."},{"t":1,"p":"Breath stacking suspected. FIRST move:","ok":"DISCONNECT CIRCUIT","no":"ADD MORE PEEP","w":"Pop the circuit and let them fully, passively exhale. Then fix the settings."},{"t":1,"p":"You disconnected. Before reconnecting:","ok":"LOWER RR / Vt","no":"SAME SETTINGS","w":"Decrease rate and/or tidal volume and lengthen expiratory time — or it just re-stacks."},{"t":1,"p":"Opioid OD, hypercarbic. 'Crank the rate to blow off CO2' is…","ok":"RIGHT — DRIVE IS DEAD","no":"WRONG — IT STACKS","w":"The one place rate-up is exactly right: the drive failed, the lungs are fine. In COPD the same move causes auto-PEEP."},{"t":1,"p":"Hypoxic failure (ARDS): the two knobs.","ok":"FiO2 + PEEP","no":"RATE + TIDAL VOL","w":"They move together, up an ARDSnet-style ladder."},{"t":1,"p":"ARDS tidal volume:","ok":"4–8 mL/kg PBW","no":"10–12 mL/kg","w":"Lung-protective ventilation. ARMA (NEJM 2000): mortality 31.0% vs 39.8% for 6 vs 12 mL/kg."},{"t":1,"p":"Every +1 mL/kg above the protective baseline:","ok":"+15–23% MORTALITY","no":"HARMLESS","w":"Needham 2015: a stepwise, dose-dependent mortality increase per mL/kg."},{"t":1,"p":"Plateau pressure goal:","ok":"UNDER 30","no":"UNDER 45","w":"Pplat <30 cmH2O — checked with an inspiratory hold."},{"t":1,"p":"Pplat comes back 34. You…","ok":"LOWER Vt (↑RR)","no":"LOWER THE PEEP","w":"Reduce tidal volume first; raise the rate if needed to preserve minute ventilation."},{"t":1,"p":"Ppeak 52 but Pplat 19.","ok":"CIRCUIT PROBLEM","no":"LUNG PROBLEM","w":"High peak + normal plateau = resistance: mucus plug, kinked tube, biting. Fix the circuit."},{"t":1,"p":"Satting 91% on FiO2 100 + PEEP 5. Leave it?","ok":"NO — CLIMB LADDER","no":"YES — IT'S WORKING","w":"The one combo the talk banned: never park at FiO2 100/PEEP 5. Let PEEP share the work."},{"t":1,"p":"Which ARDSnet ladder — high-PEEP or low-PEEP?","ok":"EQUIPOISE — PICK ONE","no":"HIGH-PEEP WINS","w":"Total clinical equipoise between the two tables. Just pick one and climb."},{"t":1,"p":"ARDS patient satting 88%.","ok":"ACCEPTABLE","no":"EMERGENCY","w":"Target 88–95%. You don't need 100 — chasing it costs pressure and oxygen toxicity."},{"t":1,"p":"Driving pressure =","ok":"PPLAT − PEEP","no":"PPEAK − PEEP","w":"ΔP is what increasingly tracks mortality. If it's confusing, just keep Pplat <30."},{"t":1,"p":"You raise PEEP; Pplat doesn't budge.","ok":"YOU RECRUITED LUNG","no":"NO BENEFIT","w":"Same plateau at higher PEEP means ΔP fell — the added pressure opened new lung."},{"t":1,"p":"Intubating a severe metabolic acidosis. The rate:","ok":"MATCH THEIRS NOW","no":"STANDARD 14","w":"Their tachypnea WAS the compensation. Take it away with a vent set at 14 and the pH craters."},{"t":1,"p":"Post-intubation hypotension: the plan is made…","ok":"BEFORE INDUCTION","no":"WHEN IT HAPPENS","w":"It's common and tied to worse outcomes — fluids running, push-dose or infusion pressors drawn up first."},{"t":1,"p":"Roc on board, ketamine wearing off. The risk:","ok":"PARALYZED + AWAKE","no":"NOTHING — FINE","w":"Rocuronium outlasts ketamine. Have the analgosedation plan already in motion — being paralyzed and awake is horrible."},{"t":1,"p":"Post-intubation gas at…","ok":"15–20 MINUTES","no":"NEXT MORNING","w":"Check a gas 15–20 min after intubation, adjust RR to the pCO2/pH — and re-verify the settings RT dialed."},{"t":1,"p":"Neuro switched off your sedation for an exam. That's…","ok":"ESCALATE — UNSAFE","no":"FINE, THEY'RE DOCTORS","w":"An absolute no-no from the talk: nobody turns off your sedation without you. Escalate immediately."},{"t":2,"p":"Reading a blood gas. Look FIRST at the…","ok":"BICARB","no":"pH","w":"Bicarb first. The pH comes last — it's just the sum."},{"t":2,"p":"Your “-osis” is your…","ok":"PROCESS","no":"FINAL pH","w":"The -osis is what's happening; the pH (-emia) is the sum of every process fighting it out."},{"t":2,"p":"HCO3 = 12.","ok":"METABOLIC ACIDOSIS","no":"METABOLIC ALKALOSIS","w":"Low bicarb = metabolic acidosis. High bicarb = metabolic alkalosis. That's step one."},{"t":2,"p":"Winter's formula:","ok":"1.5×HCO3 + 8 ± 2","no":"HCO3 + 15 ± 5","w":"Expected pCO2 = 1.5 × HCO3 + 8 (±2). It's on MDCalc — you don't memorize it, you use it."},{"t":2,"p":"HCO3 12 → Winter's expects a pCO2 near…","ok":"26","no":"40","w":"1.5×12 + 8 = 26 (±2). A 'normal' 40 here would itself be a respiratory acidosis."},{"t":2,"p":"Winter's expects 26. Measured pCO2 is 16.","ok":"+ RESP ALKALOSIS","no":"APPROPRIATE COMP","w":"Lower than expected = a second process: concurrent respiratory alkalosis."},{"t":2,"p":"Winter's expects 26. Measured pCO2 is 38.","ok":"+ RESP ACIDOSIS","no":"APPROPRIATE COMP","w":"Higher than expected = a hidden respiratory acidosis on top of the metabolic one."},{"t":2,"p":"The classic salicylate gas:","ok":"MET ACID + RESP ALK","no":"PURE RESP ACIDOSIS","w":"High-gap metabolic acidosis plus a PRIMARY respiratory alkalosis — running simultaneously."},{"t":2,"p":"Salicylate toxicity: the pH can look…","ok":"DECEPTIVELY NORMAL","no":"ALWAYS < 7.0","w":"Two opposing processes can sum to near-normal. Never blunt the compensation — intubation at 'standard' settings can be fatal."},{"t":2,"p":"pCO2 68 with a NORMAL bicarb of 26.","ok":"ACUTE RESP ACIDOSIS","no":"CHRONIC RETAINER","w":"Kidneys need days to compensate. Normal bicarb + high pCO2 = acute hypoventilation."},{"t":2,"p":"pCO2 62, HCO3 32, pH 7.33.","ok":"CHRONIC RETAINER","no":"ACUTE EVENT","w":"The high bicarb is renal compensation built over time — the COPD steady state. Don't ventilate him to a pCO2 of 40."},{"t":2,"p":"Anion gap =","ok":"NA − CL − HCO3","no":"NA + K − CL","w":"Na − Cl − HCO3; elevated above ~12 means unmeasured anions are carrying charge."},{"t":2,"p":"Methanol's anion gap comes from…","ok":"FORMIC ACID","no":"THE PARENT DRUG","w":"It's the METABOLITES that carry the charge, not the parents — the real critique of memorizing MUDPILES."},{"t":2,"p":"Metformin at normal therapeutic doses is…","ok":"BENIGN","no":"ALWAYS CAUSES MALA","w":"Therapeutic metformin is benign — but MALA is real in overdose or accumulation with renal failure."},{"t":2,"p":"Sign-out time. The bicarb of 14 is still unexplained.","ok":"FIND THE CAUSE FIRST","no":"SLEEP ON IT","w":"Never let the sun set on a low bicarb you haven't explained. You don't need the whole workup — you need the cause."}];
+const THEMES=[["FAST TRACK","the URI waiting room","#8b46c9",[.55,.36,.62]],
+ ["RESUS","the vent is yours","#0fa693",[.30,.55,.52]],
+ ["GAS LAB","bicarb first, always","#e8890c",[.62,.48,.28]]];
+const $=id=>document.getElementById(id);
+const shuf=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const vib=ms=>{try{navigator.vibrate&&navigator.vibrate(ms);}catch(e){}};
+const AU={ctx:null,on:true,init(){if(this.ctx||!this.on)return;try{this.ctx=new(window.AudioContext||window.webkitAudioContext)();
+ this.g=this.ctx.createGain();this.g.gain.value=.14;this.g.connect(this.ctx.destination);}catch(e){this.on=false;}},
+ t(f,d,ty,t0,v){if(!this.ctx||!this.on)return;if(this.ctx.state==="suspended"){try{this.ctx.resume();}catch(e){}}const o=this.ctx.createOscillator(),g=this.ctx.createGain();
+ o.type=ty||"square";o.frequency.value=f;const T=this.ctx.currentTime+(t0||0);
+ g.gain.setValueAtTime(v||.5,T);g.gain.exponentialRampToValueAtTime(.001,T+d);
+ o.connect(g);g.connect(this.g);o.start(T);o.stop(T+d+.02);},
+ n(d,v){if(!this.ctx||!this.on)return;if(this.ctx.state==="suspended"){try{this.ctx.resume();}catch(e){}}const b=this.ctx.createBuffer(1,this.ctx.sampleRate*d,this.ctx.sampleRate),c=b.getChannelData(0);
+ for(let i=0;i<c.length;i++)c[i]=(Math.random()*2-1)*(1-i/c.length);
+ const s=this.ctx.createBufferSource();s.buffer=b;const g=this.ctx.createGain();g.gain.value=v||.4;
+ s.connect(g);g.connect(this.g);s.start();}};
+const SFX={tap:()=>AU.t(600,.05,"square",0,.3),
+ lane:()=>AU.t(900,.05,"triangle",0,.35),
+ pass:c=>{AU.n(.05,.5);const f=520*Math.pow(2,Math.min(c,10)/12);AU.t(f,.08,"triangle",.02,.55);AU.t(f*1.4,.12,"triangle",.08,.5);},
+ streak:()=>{[660,880,1109,1319].forEach((f,i)=>AU.t(f,.09,"square",i*.05,.5));},
+ crash:()=>{AU.n(.14,.8);AU.t(150,.28,"sawtooth",0,.6);AU.t(100,.34,"sawtooth",.1,.6);},
+ warn:()=>AU.t(1250,.04,"square",0,.28),
+ doors:()=>{AU.t(880,.1,"square",0,.5);AU.t(1175,.16,"square",.14,.5);},
+ win:()=>{[523,659,784,1047].forEach((f,i)=>AU.t(f,.15,"square",i*.09,.5));}};
+/* ---------- state ---------- */
+const S={mode:"title",score:0,best:0,combo:0,maxCombo:0,lives:3,round:-1,queue:[],q:null,misses:[],
+ ft:{ok:0,tot:0},p:0,budget:1,lane:0,laneX:0,leftIsOK:true,lock:true,run:0,t:0,scroll:0,
+ dash:false,crashT:0,freeze:0,warnT:0,intelCB:null,gL:null,gR:null,cardN:0};
+const PARTS=[];
+function layer(id){document.querySelectorAll(".lay").forEach(l=>l.classList.toggle("on",l.id===id));}
+let tmrA=null,tmrB=null;
+function killTimers(){clearTimeout(tmrA);clearTimeout(tmrB);tmrA=tmrB=null;}
+function theme(){return THEMES[Math.max(0,S.round)]||THEMES[0];}
+function hud(){$("hscore").textContent=S.score;
+ const c=$("hcombo");c.textContent="STREAK ×"+S.combo;c.classList.toggle("on",S.combo>=2);
+ $("hlives").innerHTML="";for(let i=0;i<3;i++){const b=document.createElement("div");
+  b.className="bb"+(i<3-S.lives?" used":"");$("hlives").appendChild(b);}}
+function pop(x,y,txt,big){const p=document.createElement("div");p.className="pop"+(big?" big":"");
+ p.textContent=txt;p.style.left=x+"px";p.style.top=y+"px";
+ $("fx").appendChild(p);setTimeout(()=>p.remove(),820);}
+function burst(x,y,cols,n,up){for(let i=0;i<n;i++){PARTS.push({x,y,vx:(Math.random()-.5)*460,
+ vy:(up?-(80+Math.random()*380):(Math.random()-.6)*420),life:.6+Math.random()*.4,r:2.5+Math.random()*3.5,
+ col:cols[i%cols.length],sq:Math.random()<.5});}}
+/* ---------- run ---------- */
+function buildRun(){S.queue=[];for(let t=0;t<3;t++){shuf(DECK.filter(d=>d.t===t)).slice(0,8)
+ .forEach(c=>S.queue.push({c,tried:false}));}}
+function startRun(){AU.init();killTimers();
+ S.score=0;S.combo=0;S.maxCombo=0;S.lives=3;S.round=-1;S.misses=[];S.ft={ok:0,tot:0};
+ S.lock=true;S.mode="game";S.q=null;S.lane=0;S.laneX=0;S.cardN=0;clearGates();
+ buildRun();hud();next();}
+function banner(t,cb){S.round=t;layer("lay-wave");SFX.doors();
+ document.documentElement.style.setProperty("--tcol",THEMES[t][2]);
+ $("wnum").textContent="ROUND "+(t+1)+" / 3";$("wname").textContent=THEMES[t][0];
+ $("wname").style.color=THEMES[t][2];$("wsub").textContent=THEMES[t][1];
+ const lw=$("lay-wave");lw.classList.remove("slam");void lw.offsetWidth;lw.classList.add("slam");
+ tmrA=setTimeout(cb,1500);}
+function next(){killTimers();clearGates();
+ if(!S.queue.length)return endRun(true);
+ const q=S.queue[0];
+ if(q.c.t!==S.round)return banner(q.c.t,()=>{layer("lay-game");deal();});
+ layer("lay-game");deal();}
+function clearGates(){[...$("gates").children].forEach(g=>g.remove());S.gL=S.gR=null;}
+function deal(){const q=S.queue.shift();S.q=q;S.cardN++;
+ const th=theme();
+ $("ptag").textContent=th[0]+" · CH-"+(100+S.cardN);
+ $("ptag").style.color=th[2];
+ $("ptext").textContent=q.c.p;
+ S.leftIsOK=Math.random()<.5;
+ const L=S.leftIsOK?q.c.ok:q.c.no,R=S.leftIsOK?q.c.no:q.c.ok;
+ $("sL").childNodes[0].textContent=L;$("sR").childNodes[0].textContent=R;
+ $("sL").classList.remove("pick");$("sR").classList.remove("pick");
+ const mk=(cls,txt)=>{const g=document.createElement("div");g.className="gate "+cls;
+  g.innerHTML=txt+"<span class='pole'></span>";$("gates").appendChild(g);return g;};
+ S.gL=mk("L",L);S.gR=mk("R",R);
+ S.lane=0;S.p=0;S.warnT=0;S.dash=false;$("stampzone").innerHTML="";
+ const ms=clamp(4600+34*q.c.p.length,5600,9800)*(1-.06*q.c.t)*(S.combo>=8?.9:1);
+ S.budget=ms;S.lock=false;}
+function setLane(l){if(S.lock||S.mode!=="game")return;
+ if(S.lane===l)return;S.lane=l;SFX.lane();vib(8);
+ if(l!==0&&!S.dash){S.dash=true;AU.n(.09,.35);}
+ $("sL").classList.toggle("pick",l===-1);$("sR").classList.toggle("pick",l===1);}
+function commit(){S.lock=true;
+ const q=S.q;
+ if(S.lane===0){ // crashed into the desk
+  gradeMiss(q,-1);return;}
+ const side=S.lane===-1?0:1;
+ const pickedOK=(side===0)===S.leftIsOK;
+ if(!q.tried){S.ft.tot++;if(pickedOK)S.ft.ok++;}
+ const label=side===0?$("sL").childNodes[0].textContent:$("sR").childNodes[0].textContent;
+ const st=document.createElement("div");st.className="stamp "+(pickedOK?"g":"r");st.textContent=label;
+ $("stampzone").innerHTML="";$("stampzone").appendChild(st);
+ requestAnimationFrame(()=>st.classList.add("hit"));
+ tmrB=setTimeout(()=>{st.remove();},450);
+ const W=$("col").clientWidth,H=$("col").clientHeight;
+ if(pickedOK){S.combo++;S.maxCombo=Math.max(S.maxCombo,S.combo);
+  const pts=100+15*S.combo+Math.round((1-Math.min(1,S.p))*S.budget/140);
+  S.score+=pts;hud();SFX.pass(S.combo);vib(12);S.freeze=.05;
+  burst(W/2+ (side===0?-1:1)*W*.2,H*.62,[theme()[2],"#ffffff","#ffd95e"],18,true);
+  pop(W/2,H*.4,"+"+pts);
+  if(S.combo%5===0){SFX.streak();pop(W/2,H*.3,"STREAK ×"+S.combo+"!",true);}
+  clearGates();S.lane=0;
+  tmrA=setTimeout(next,300);}
+ else gradeMiss(q,side);}
+function gradeMiss(q,side){clearGates();
+ if(!q.tried){S.ft.tot++;}
+ S.lives--;S.combo=0;hud();
+ SFX.crash();vib(80);S.freeze=.1;S.crashT=.62;
+ const W=$("col").clientWidth,H=$("col").clientHeight;
+ burst(W/2,H*.7,["#ffffff","#e8eef6","#ffd95e"],22,true);
+ $("col").classList.remove("shake");void $("col").offsetWidth;$("col").classList.add("shake");
+ if(side>=0){const st=document.createElement("div");st.className="stamp r";
+  st.textContent=side===0?$("sL").childNodes[0].textContent:$("sR").childNodes[0].textContent;
+  $("stampzone").innerHTML="";$("stampzone").appendChild(st);
+  requestAnimationFrame(()=>st.classList.add("hit"));}
+ if(!q.tried)S.misses.push(q.c);
+ q.tried=true;
+ let at=S.queue.length;for(let i=0;i<S.queue.length;i++){if(S.queue[i].c.t>q.c.t){at=i;break;}}
+ S.queue.splice(at,0,q);
+ tmrA=setTimeout(()=>intel(q.c,side),460);}
+function intel(c,side){S.mode="intel";clearGates();$("stampzone").innerHTML="";layer("lay-intel");
+ $("ihead").textContent=S.lives>0?(side<0?"⏱ FROZE AT THE FORK":"✘ BOUNCE-BACK"):"✘ THIRD BOUNCE-BACK";
+ $("ip").textContent=c.p;
+ $("ichs").innerHTML="<div class='ich right'>✔ "+c.ok+"</div><div class='ich chose'>✘ "+c.no+"</div>";
+ $("iwhy").textContent=c.w;
+ S.intelCB=()=>{if(S.lives<=0)endRun(false);else{S.mode="game";next();}};}
+function endRun(won){killTimers();S.lock=true;S.mode="over";clearGates();layer("lay-over");
+ const acc=S.ft.tot?Math.round(100*S.ft.ok/S.ft.tot):0;
+ $("otitle").textContent=won?"SHIFT COMPLETE":"THE PD WANTS A WORD";
+ $("osub").textContent=won?"sign-out accepted · new tracks next run":"three bounce-backs · they made a slide about you";
+ if(won)SFX.win();else SFX.crash();
+ const r=won?(acc>=95&&S.lives===3?"S":acc>=85?"A":acc>=70?"B":"C"):(acc>=70?"C":"D");
+ const rk=$("rank");rk.className="r"+r;rk.textContent=r;
+ $("ostats").innerHTML="";
+ [["SCORE",S.score],["1ST-TRY",acc+"%"],["STREAK","×"+S.maxCombo],["BOUNCES",3-S.lives]].forEach(s=>{
+  const d=document.createElement("div");d.className="stat";
+  d.innerHTML="<div class='l'>"+s[0]+"</div><div class='v'>"+s[1]+"</div>";$("ostats").appendChild(d);});
+ if(S.score>S.best){S.best=S.score;$("obest").textContent="★ NEW SESSION BEST ★";}
+ else $("obest").textContent=S.best?"SESSION BEST "+S.best:"";
+ $("omlist").innerHTML=S.misses.length?S.misses.map(m=>"<div class='mrow'>"+m.p+"<br><b>▸ "+m.ok+"</b> — "+m.w+"</div>").join("")
+  :"<div class='mrow'>Clean board. <b>▸ Chase the S: perfect first-try, zero bounce-backs.</b></div>";
+ $("tbest").textContent="SESSION BEST "+S.best;}
+/* ---------- sim ---------- */
+function step(dt){S.t+=dt;
+ if(S.freeze>0){S.freeze-=dt;return;}
+ if(S.crashT>0)S.crashT-=dt;
+ const spd=(S.mode==="game"?1:.55)*(1+Math.min(.7,S.combo*.06));
+ S.scroll+=dt*2.1*spd;
+ S.laneX+=(S.lane-S.laneX)*Math.min(1,dt*(S.dash?16:10));
+ for(let i=PARTS.length-1;i>=0;i--){const p=PARTS[i];p.x+=p.vx*dt;p.y+=p.vy*dt;p.vy+=620*dt;
+  p.life-=dt;if(p.life<=0)PARTS.splice(i,1);}
+ if(S.mode==="game"&&!S.lock&&S.q){
+  S.p+=S.dash?Math.max(dt*1000/S.budget,dt*3.4):dt*1000/S.budget;
+  if(S.p>.72&&S.lane===0){S.warnT+=dt;if(S.warnT>.45){S.warnT=0;SFX.warn();}}
+  if(S.p>=1)commit();}
+ layoutGates();}
+function proj(p,dir,W,H){const hz=H*.335,py=H*.80;
+ const e=Math.pow(Math.min(1,p),1.6);
+ const laneOff=Math.min(W*.27,140);
+ return {x:W/2+dir*laneOff*Math.pow(Math.min(1,p),1.25),
+  y:hz+(py-hz)*e, s:.13+.9*e};}
+function layoutGates(){if(!S.gL)return;
+ const W=$("col").clientWidth,H=$("col").clientHeight;
+ [[S.gL,-1],[S.gR,1]].forEach(([g,dir])=>{
+  const q=proj(S.p,dir,W,H);
+  g.style.transform="translate("+(q.x)+"px,"+(q.y)+"px) translate(-50%,-100%) scale("+q.s+")";
+  g.style.fontSize=clamp(11+q.s*8,11,20)+"px";});}
+/* ---------- world drawing ---------- */
+const cv=$("world"),cx=cv.getContext("2d");
+function drawWorld(){const dpr=Math.min(2,window.devicePixelRatio||1);
+ const W=cv.clientWidth,H=cv.clientHeight;
+ if(cv.width!==Math.round(W*dpr)){cv.width=W*dpr;cv.height=H*dpr;cx.setTransform(dpr,0,0,dpr,0,0);}
+ const th=theme(),tc=th[3],t=S.t,hz=H*.335,py=H*.80;
+ const bob=Math.sin(t*9)*2.2;
+ // walls/ceiling
+ const cg=cx.createLinearGradient(0,0,0,hz);
+ cg.addColorStop(0,"rgb("+(200+tc[0]*40)+","+(206+tc[1]*36)+","+(216+tc[2]*30)+")");
+ cg.addColorStop(1,"rgb("+(158+tc[0]*70)+","+(166+tc[1]*66)+","+(178+tc[2]*56)+")");
+ cx.fillStyle=cg;cx.fillRect(0,0,W,hz+2);
+ // floor
+ const fg=cx.createLinearGradient(0,hz,0,H);
+ fg.addColorStop(0,"rgb("+(120+tc[0]*90)+","+(128+tc[1]*86)+","+(142+tc[2]*70)+")");
+ fg.addColorStop(1,"rgb("+(216+tc[0]*30)+","+(222+tc[1]*26)+","+(230+tc[2]*20)+")");
+ cx.fillStyle=fg;cx.fillRect(0,hz,W,H-hz);
+ // ---- the fork: two labeled tracks ----
+ const roll=S.scroll%1;
+ const laneOff=Math.min(W*.27,140);
+ const ep=p=>Math.pow(p,1.6), tX=(p,dir)=>W/2+dir*laneOff*Math.pow(p,1.25),
+  tY=p=>hz+(py-hz)*ep(p), tHW=p=>2.5+W*.145*ep(p);
+ [[-1,"rgba(240,154,18,.30)","rgba(255,214,140,.85)"],[1,"rgba(31,134,224,.30)","rgba(150,205,255,.85)"]]
+ .forEach(([dir,fill,tie])=>{
+  cx.fillStyle=fill;cx.beginPath();
+  const N=9;
+  for(let i=0;i<=N;i++){const p=.06+1.14*i/N;const x=tX(p,dir)-tHW(p),y=tY(p);
+   i===0?cx.moveTo(x,y):cx.lineTo(x,y);}
+  for(let i=N;i>=0;i--){const p=.06+1.14*i/N;cx.lineTo(tX(p,dir)+tHW(p),tY(p));}
+  cx.closePath();cx.fill();
+  cx.fillStyle=tie;
+  for(let i=0;i<9;i++){const p=.08+((i+roll)%9)/9*1.1;
+   cx.globalAlpha=.10+.5*ep(Math.min(1,p));
+   cx.fillRect(tX(p,dir)-tHW(p)*.72,tY(p),tHW(p)*1.44,2+3.5*ep(Math.min(1,p)));}
+  cx.globalAlpha=1;});
+ // center strip dead-ends at the desk
+ cx.fillStyle="rgba(120,132,150,.30)";cx.beginPath();
+ for(let i=0;i<=6;i++){const p=.06+.76*i/6;cx.lineTo(W/2-tHW(p)*.42,tY(p));}
+ for(let i=6;i>=0;i--){const p=.06+.76*i/6;cx.lineTo(W/2+tHW(p)*.42,tY(p));}
+ cx.closePath();cx.fill();
+ {const p=.84,dw=tHW(p)*1.15,dy=tY(p),dh=10+26*ep(p);
+  cx.fillStyle="#8d97a8";cx.fillRect(W/2-dw,dy-dh,dw*2,dh);
+  cx.fillStyle="#6d7788";cx.fillRect(W/2-dw,dy-dh,dw*2,3+dh*.16);
+  for(let i=0;i<8;i++){cx.fillStyle=i%2?"#e8384f":"#f6f2e8";
+   cx.fillRect(W/2-dw+i*(dw*2/8),dy-4,dw*2/8,4);}}
+ // ceiling light bars whooshing past
+ for(let i=0;i<7;i++){const pr=Math.pow(((i+roll)%7)/7,1.7);
+  const y=hz-(hz*.75)*pr, w=(.12+.55*pr)*W;
+  cx.globalAlpha=.25+.55*pr;cx.fillStyle="#f6fbff";
+  cx.fillRect(W/2-w/2,y,w,2.5+3.5*pr);}
+ cx.globalAlpha=1;
+ // passing side doors
+ for(let i=0;i<6;i++){const pr=Math.pow(((i*1.7+S.scroll*.9)%6)/6,1.8);
+  const dh=(18+150*pr),dw=dh*.5,y=hz+(py-hz)*pr-dh;
+  cx.globalAlpha=.5+.4*pr;
+  cx.fillStyle="rgb("+(96+tc[0]*120)+","+(104+tc[1]*110)+","+(120+tc[2]*90)+")";
+  cx.fillRect(W/2-(.3+.62*pr)*W/2-dw,y,dw,dh);
+  cx.fillRect(W/2+(.3+.62*pr)*W/2,y,dw,dh);}
+ cx.globalAlpha=1;
+ // end wall glow (where you're headed)
+ cx.fillStyle="rgba(255,255,255,.55)";
+ cx.fillRect(W/2-W*.075,hz-H*.045,W*.15,H*.045);
+ // speed lines at streak
+ if(S.combo>=5&&S.mode==="game"){cx.strokeStyle="rgba(255,255,255,.5)";cx.lineWidth=2;
+  for(let i=0;i<6;i++){const yy=(i*97+S.scroll*640)% H;
+   cx.beginPath();cx.moveTo(0,yy);cx.lineTo(26+(S.combo),yy);cx.stroke();
+   cx.beginPath();cx.moveTo(W,H-yy);cx.lineTo(W-26-(S.combo),H-yy);cx.stroke();}}
+ // shadow + runner
+ const px=W/2+S.laneX*Math.min(W*.27,140);
+ const crash=S.crashT>0;
+ const rot=crash?(.62-S.crashT)*7:S.laneX*.22;
+ cx.save();cx.translate(px,py+bob*(crash?0:1));cx.rotate(rot);
+ cx.globalAlpha=.25;cx.fillStyle="#25314a";
+ cx.beginPath();cx.ellipse(0,26,22,7,0,0,Math.PI*2);cx.fill();cx.globalAlpha=1;
+ const leg=Math.sin(t*13)*(crash?2:9);
+ cx.strokeStyle="#22406b";cx.lineWidth=6;cx.lineCap="round";
+ cx.beginPath();cx.moveTo(-4,6);cx.lineTo(-4-leg*.5,24);cx.stroke();
+ cx.beginPath();cx.moveTo(5,6);cx.lineTo(5+leg*.5,24);cx.stroke();
+ cx.fillStyle=th[2];
+ cx.beginPath();cx.roundRect?cx.roundRect(-11,-16,22,26,7):cx.rect(-11,-16,22,26);cx.fill();
+ cx.strokeStyle=th[2];cx.lineWidth=5.5;
+ cx.beginPath();cx.moveTo(-10,-8);cx.lineTo(-10-leg*.6,4);cx.stroke();
+ cx.beginPath();cx.moveTo(10,-8);cx.lineTo(10+leg*.6,4);cx.stroke();
+ cx.fillStyle="#f4c89e";cx.beginPath();cx.arc(0,-25,9.5,0,Math.PI*2);cx.fill();
+ cx.fillStyle="#2b3547";cx.beginPath();cx.arc(0,-29,9.5,Math.PI,0);cx.fill();
+ if(crash){cx.fillStyle="#fff";
+  for(let i=0;i<3;i++){cx.fillRect(-26+i*20,-40-((.62-S.crashT)*60)%30,9,12);}}
+ cx.restore();
+ // particles (confetti squares + dots)
+ PARTS.forEach(p=>{cx.globalAlpha=Math.max(0,p.life*1.5);cx.fillStyle=p.col;
+  if(p.sq){cx.save();cx.translate(p.x,p.y);cx.rotate(p.life*7);cx.fillRect(-p.r,-p.r,p.r*2,p.r*2);cx.restore();}
+  else{cx.beginPath();cx.arc(p.x,p.y,p.r,0,Math.PI*2);cx.fill();}});
+ cx.globalAlpha=1;}
+let last=performance.now();
+function loop(now){const dt=Math.min(.05,(now-last)/1000);last=now;
+ step(dt);drawWorld();requestAnimationFrame(loop);}
+/* ---------- input ---------- */
+$("playbtn").onclick=()=>{SFX.tap();startRun();};
+$("o-retry").onclick=()=>{SFX.tap();startRun();};
+$("o-title").onclick=()=>{SFX.tap();S.mode="title";clearGates();layer("lay-title");};
+$("sL").onclick=e=>{e.stopPropagation();setLane(-1);};
+$("sR").onclick=e=>{e.stopPropagation();setLane(1);};
+$("lay-intel").onclick=()=>{SFX.tap();if(S.intelCB){const c=S.intelCB;S.intelCB=null;c();}};
+$("tsnd").onclick=e=>{e.stopPropagation();AU.on=!AU.on;if(AU.on)AU.init();$("tsnd").textContent="SOUND: "+(AU.on?"ON":"OFF");};
+let swX=null;
+$("lay-game").addEventListener("pointerdown",e=>{swX=e.clientX;
+ const r=$("col").getBoundingClientRect();
+ setLane(e.clientX<r.left+r.width/2?-1:1);});
+$("lay-game").addEventListener("pointermove",e=>{if(swX==null)return;
+ const dx=e.clientX-swX;if(Math.abs(dx)>42){setLane(dx<0?-1:1);swX=e.clientX;}});
+$("lay-game").addEventListener("pointerup",()=>{swX=null;});
+if(!window.PointerEvent){
+ $("lay-game").addEventListener("touchstart",function(e){var t=e.touches[0];swX=t.clientX;
+  var r=$("col").getBoundingClientRect();setLane(t.clientX<r.left+r.width/2?-1:1);},{passive:true});
+ $("lay-game").addEventListener("touchmove",function(e){if(swX==null)return;var t=e.touches[0];
+  var dx=t.clientX-swX;if(Math.abs(dx)>42){setLane(dx<0?-1:1);swX=t.clientX;}},{passive:true});
+ $("lay-game").addEventListener("touchend",function(){swX=null;});}
+document.addEventListener("keydown",e=>{
+ if($("lay-game").classList.contains("on")&&!S.lock){
+  if(e.key==="ArrowLeft")setLane(-1);
+  else if(e.key==="ArrowRight")setLane(1);}
+ else if($("lay-intel").classList.contains("on")&&(e.key==="Enter"||e.key===" "))$("lay-intel").click();
+ else if($("lay-title").classList.contains("on")&&e.key==="Enter")$("playbtn").click();
+ else if($("lay-over").classList.contains("on")&&e.key==="Enter")$("o-retry").click();});
+document.addEventListener("pointerdown",()=>AU.init(),{once:true});
+document.documentElement.style.setProperty("--tcol","#8b46c9");
+requestAnimationFrame(loop);
+</script>
+</body>
+</html>
