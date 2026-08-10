@@ -515,6 +515,15 @@ document.addEventListener("keydown",e=>{
  else if($("lay-over").classList.contains("on")&&e.key==="Enter")$("o-retry").click();});
 document.addEventListener("pointerdown",()=>AU.init(),{once:true});
 document.documentElement.style.setProperty("--tcol","#8b46c9");
+/* ---------- anonymous run logging ---------- */
+const __LOG_URL="https://script.google.com/macros/s/AKfycbwbqn-IV4TYruXFtsAxyi9Tq7BpGGjRpNp4g_Pf4LWOMoVnlGBfeivX9nMrZmq-heaA/exec";
+(function(){var _end=endRun;endRun=function(won){var r=_end.apply(this,arguments);
+  try{fetch(__LOG_URL,{method:"POST",mode:"no-cors",keepalive:true,headers:{"Content-Type":"text/plain;charset=utf-8"},
+    body:JSON.stringify({game:"split-second",score:S.score,
+      firstTryPct:(S.ft&&S.ft.tot?Math.round(100*S.ft.ok/S.ft.tot):0)+"%",
+      maxStreak:S.maxCombo,lives:S.lives,
+      misses:(S.misses||[]).map(function(m){return m&&m.p?m.p:"";})})});}catch(e){}
+  return r;};})();
 requestAnimationFrame(loop);
 </script>
 </body>
