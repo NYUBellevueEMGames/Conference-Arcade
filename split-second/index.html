@@ -295,7 +295,7 @@ function deal(){const q=S.queue.shift();S.q=q;S.cardN++;
   g.innerHTML=txt+"<span class='pole'></span>";$("gates").appendChild(g);return g;};
  S.gL=mk("L",L);S.gR=mk("R",R);
  S.lane=0;S.p=0;S.warnT=0;S.dash=false;$("stampzone").innerHTML="";
- const ms=clamp(4600+34*q.c.p.length,5600,9800)*(1-.06*q.c.t)*(S.combo>=8?.9:1);
+ const ms=clamp(4600+34*q.c.p.length,5600,9800)*1.4548*(1-.06*q.c.t)*(S.combo>=8?.9:1); // response-time tuning: 1.15^2 x 1.10
  S.budget=ms;S.lock=false;}
 function setLane(l){if(S.lock||S.mode!=="game")return;
  if(S.lane===l)return;S.lane=l;SFX.lane();vib(8);
@@ -350,8 +350,11 @@ function endRun(won){killTimers();S.lock=true;S.mode="over";clearGates();layer("
  $("otitle").textContent=won?"SHIFT COMPLETE":"THE PD WANTS A WORD";
  $("osub").textContent=won?"sign-out accepted · new tracks next run":"three bounce-backs · they made a slide about you";
  if(won)SFX.win();else SFX.crash();
- const r=won?(acc>=95&&S.lives===3?"S":acc>=85?"A":acc>=70?"B":"C"):(acc>=70?"C":"D");
- const rk=$("rank");rk.className="r"+r;rk.textContent=r;
+ let r;
+ if(won){r=acc>=90&&S.lives>=2?"S":acc>=84?"A+":acc>=76?"A":acc>=68?"B+":acc>=58?"B":acc>=48?"C+":"C";}
+ else{r=acc>=60?"C":acc>=42?"D+":"D";}
+ const rk=$("rank");rk.className="r"+r[0];rk.textContent=r;
+ rk.style.fontSize=r.length>1?"32px":"";
  $("ostats").innerHTML="";
  [["SCORE",S.score],["1ST-TRY",acc+"%"],["STREAK","×"+S.maxCombo],["BOUNCES",3-S.lives]].forEach(s=>{
   const d=document.createElement("div");d.className="stat";
@@ -359,7 +362,7 @@ function endRun(won){killTimers();S.lock=true;S.mode="over";clearGates();layer("
  if(S.score>S.best){S.best=S.score;$("obest").textContent="★ NEW SESSION BEST ★";}
  else $("obest").textContent=S.best?"SESSION BEST "+S.best:"";
  $("omlist").innerHTML=S.misses.length?S.misses.map(m=>"<div class='mrow'>"+m.p+"<br><b>▸ "+m.ok+"</b> — "+m.w+"</div>").join("")
-  :"<div class='mrow'>Clean board. <b>▸ Chase the S: perfect first-try, zero bounce-backs.</b></div>";
+  :"<div class='mrow'>Clean board. <b>▸ S-rank secured — defend it next shift.</b></div>";
  $("tbest").textContent="SESSION BEST "+S.best;}
 /* ---------- sim ---------- */
 function step(dt){S.t+=dt;
