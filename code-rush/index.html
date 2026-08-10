@@ -961,7 +961,7 @@ function deal(){const q=S.queue.shift();S.q=q;
   b.innerHTML="<span class='k'>"+(pos+1)+"</span><span>"+q.it.options[oi]+"</span>";
   b.dataset.oi=oi;b.dataset.pos=pos;b.onclick=()=>answer(oi);box.appendChild(b);});
  const len=q.it.prompt.length+Math.max(...q.it.options.map(o=>o.length));
- let ms=clamp(5200+30*len,7000,15000);
+ let ms=clamp(5200+30*len,7000,15000)*1.4548; // response-time tuning: 1.15^2 x 1.10
  ms*=1-.05*q.wi;if(S.combo>=10)ms*=.9;
  S.budget=ms/1000;S.timeLeft=S.budget;
  $("tfill").classList.remove("hot");
@@ -1009,8 +1009,11 @@ function endRun(won){killTimers();S.lock=true;S.mode="over";layer("lay-over");
  const ot=$("otitle");ot.className=won?"win":"dead";
  ot.textContent=won?"GAUNTLET CLEARED":"CODE — ASYSTOLE";
  if(won)SFX.win();else SFX.flat();
- const r=won?(acc>=95&&S.lives===3?"S":acc>=85?"A":acc>=70?"B":"C"):(acc>=70?"C":"D");
- const rk=$("rank");rk.className="r"+r;rk.textContent=r;
+ let r;
+ if(won){r=acc>=90&&S.lives>=2?"S":acc>=84?"A+":acc>=76?"A":acc>=68?"B+":acc>=58?"B":acc>=48?"C+":"C";}
+ else{r=acc>=60?"C":acc>=42?"D+":"D";}
+ const rk=$("rank");rk.className="r"+r[0];rk.textContent=r;
+ rk.style.fontSize=r.length>1?"32px":"";
  $("ostats").innerHTML="";
  [["SCORE",S.score],["1ST-TRY",acc+"%"],["MAX COMBO","×"+S.maxCombo],["SHOCKS",S.lives]].forEach(s=>{
   const d=document.createElement("div");d.className="stat";
@@ -1018,7 +1021,7 @@ function endRun(won){killTimers();S.lock=true;S.mode="over";layer("lay-over");
  if(S.score>S.best){S.best=S.score;$("obest").textContent="★ NEW SESSION BEST ★";}
  else $("obest").textContent=S.best?"SESSION BEST "+S.best:"";
  $("omlist").innerHTML=S.misses.length?S.misses.map(m=>"<div class='mrow'>"+m.prompt+"<br><b>▸ "+m.options[m.answer]+"</b></div>").join("")
-  :"<div class='mrow'>Nothing. Flawless read. <b>▸ Chase the S with all three shocks intact.</b></div>";
+  :"<div class='mrow'>Nothing. Flawless read. <b>▸ S-rank secured — defend it next run.</b></div>";
  $("tbest").textContent="SESSION BEST "+S.best;}
 /* ---------- sim ---------- */
 function rhythmName(){const u=1-S.timeLeft/S.budget;
