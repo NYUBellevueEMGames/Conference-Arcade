@@ -1,0 +1,572 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<title>Second Wind · REPLAY</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bungee&display=swap" rel="stylesheet">
+<style> *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{height:100%;overflow:hidden;background:#061225}body{touch-action:manipulation;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:#eaf4ff;-webkit-user-select:none;user-select:none;-webkit-text-size-adjust:100%}.disp{font-family:'Bungee',Impact,'Arial Black',sans-serif;font-weight:400;letter-spacing:.5px}#jsoff{position:fixed;top:0;left:0;right:0;z-index:99;background:#ffb454;color:#20160a;padding:12px 14px;font-size:14px;line-height:1.35;text-align:center}#errov{display:none;position:fixed;top:0;left:0;right:0;z-index:98;background:#8e1330;color:#fff;padding:10px 12px;font-size:12px;line-height:1.4;word-break:break-word}#cv{position:fixed;top:0;left:0;display:block}.layer{position:fixed;top:0;right:0;bottom:0;left:0;display:none;z-index:5}.layer.on{display:flex;flex-direction:column;overflow-y:auto;-webkit-overflow-scrolling:touch}.layer.on::before,.layer.on::after{content:"";flex:1 0 14px}.pane{flex:none;width:100%;max-width:430px;margin:0 auto;padding:0 18px}button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}/* ---------- title ---------- */ #title .pane{text-align:center}.kicker{font-size:11px;letter-spacing:3px;color:#35e0ce;text-transform:uppercase}.logo{font-size:44px;line-height:1.02;margin:10px 0 4px;color:#eaf4ff;text-shadow:0 0 26px rgba(53,224,206,.45)}.logo b{color:#35e0ce}.tag{font-size:14px;color:#a9c3e2;line-height:1.5;margin:8px 0 14px}.howbox{border:1px solid rgba(53,224,206,.35);border-radius:14px;padding:12px 14px;margin:0 0 14px;background:rgba(6,20,38,.72);text-align:left;font-size:13px;line-height:1.55;color:#cfe2f7}.howbox b{color:#35e0ce}#start{display:block;width:100%;padding:17px 10px;border-radius:14px;margin:2px 0 12px;background:#35e0ce;color:#04222b;font-size:19px;box-shadow:0 0 24px rgba(53,224,206,.5)}#start:active{box-shadow:0 0 40px rgba(53,224,206,.85)}.cred{font-size:11.5px;line-height:1.65;color:#8fa9c9;margin:2px 0 10px}.cred b{color:#c8dcf3;font-weight:600}.legal{font-size:10.5px;color:#6d86a6;line-height:1.5;margin-bottom:6px}#bestline{font-size:12px;color:#ffd98a;margin-bottom:8px}/* ---------- game ---------- */ #game.on{display:block;overflow:hidden}#hud{position:absolute;top:0;left:0;right:0;padding:10px 12px 6px 40px;display:flex;align-items:flex-start;justify-content:space-between;z-index:3}.hudL{display:flex;flex-direction:column}#score{font-size:22px;color:#eaf4ff;text-shadow:0 0 12px rgba(53,224,206,.5)}#combo{font-size:11px;color:#ffd98a;letter-spacing:1px;min-height:14px}#altr{font-size:11px;color:#9fe8dd;letter-spacing:1px;margin-top:2px}.hudR{text-align:right}#sat{display:inline-block;border-radius:10px;padding:5px 9px;font-size:15px;border:1px solid rgba(255,255,255,.2)}#sat.ok{color:#35e0ce;border-color:rgba(53,224,206,.6);background:rgba(53,224,206,.08)}#sat.warn{color:#ffd98a;border-color:rgba(255,217,138,.6);background:rgba(255,217,138,.08)}#sat.bad{color:#ff5d73;border-color:rgba(255,93,115,.7);background:rgba(255,93,115,.1)}#bestmini{font-size:10px;color:#7f97b6;margin-top:3px}#qwrap{position:absolute;top:0;right:0;bottom:0;left:34px;padding-top:80px;display:flex;flex-direction:column;justify-content:flex-end;padding:0 14px 14px;z-index:2}#rtag{font-size:10px;letter-spacing:2.5px;color:#35e0ce;text-transform:uppercase;margin-bottom:6px}#prompt{font-size:17.5px;line-height:1.42;font-weight:600;color:#f2f8ff;margin-bottom:9px;text-shadow:0 1px 8px rgba(3,10,20,.9)}#tbar{height:7px;border-radius:4px;background:rgba(255,255,255,.14);overflow:hidden;margin-bottom:11px}#tbar i{display:block;height:100%;width:100%;border-radius:4px;background:#35e0ce}#opts{display:flex;flex-direction:column}.ledge{position:relative;text-align:left;margin:0 0 8px;padding:13px 12px 13px 40px;border-radius:12px;border:1px solid rgba(159,196,236,.4);background:rgba(8,20,38,.86);color:#eaf4ff;font-size:14.5px;line-height:1.35;min-height:50px;opacity:0}.ledge .k{position:absolute;top:50%;left:11px;margin-top:-10px;width:20px;height:20px;border-radius:6px;background:rgba(53,224,206,.16);color:#35e0ce;font-size:11px;line-height:20px;text-align:center}.ledge.in{opacity:1;transition:opacity .12s linear}.ledge.dim{opacity:.28}.ledge.hit{border-color:#35e0ce;background:rgba(24,84,78,.92);box-shadow:0 0 22px rgba(53,224,206,.75)}.ledge.bad{border-color:#ff5d73;background:rgba(96,20,34,.92);box-shadow:0 0 22px rgba(255,93,115,.75)}#rb{position:absolute;top:0;right:0;bottom:0;left:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:rgba(4,12,24,.55);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);opacity:0;pointer-events:none;transition:opacity .18s linear;z-index:4;padding:0 24px}#rb.show{opacity:1}#rbn{font-size:11px;letter-spacing:3px;color:#ffd98a;text-transform:uppercase;margin-bottom:8px}#rbt{font-size:30px;color:#eaf4ff;text-shadow:0 0 22px rgba(53,224,206,.55)}#rbs{font-size:13px;color:#b7cdea;margin-top:9px;line-height:1.5;max-width:320px}#rba{font-size:14px;color:#35e0ce;margin-top:12px;letter-spacing:1px}#flash{position:absolute;top:0;right:0;bottom:0;left:0;background:#ff5d73;opacity:0;pointer-events:none;z-index:3}/* ---------- review ---------- */ #review{background:rgba(4,11,22,.94)}#review .pane{max-width:440px}.stamp{display:inline-block;padding:6px 14px;border:2px solid #ff5d73;border-radius:8px;color:#ff5d73;font-size:15px;letter-spacing:2px;transform:rotate(-4deg)}#rvsat{font-size:12px;color:#ffd98a;margin:10px 0 12px}#rvq{font-size:16.5px;line-height:1.42;font-weight:600;margin-bottom:12px}.rvopt{padding:10px 12px;border-radius:10px;border:1px solid rgba(159,196,236,.3);margin-bottom:7px;font-size:13.5px;line-height:1.35;color:#b8cbe4}.rvopt.right{border-color:#35e0ce;background:rgba(24,84,78,.55);color:#eafffb}.rvopt.picked{border-color:#ff5d73;color:#ffc9d2}#rvwhy{border-left:3px solid #35e0ce;padding:4px 0 4px 12px;margin:12px 0;font-size:14px;line-height:1.55;color:#d7e7fa}#rvwho{font-size:11px;color:#7f97b6;margin-bottom:16px}#resume{display:block;width:100%;padding:15px 10px;border-radius:13px;background:rgba(53,224,206,.14);border:1px solid #35e0ce;color:#35e0ce;font-size:15px;letter-spacing:1px}/* ---------- over ---------- */ #over{background:rgba(4,11,22,.82)}#over .pane{max-width:440px;text-align:center}#rank{font-size:76px;line-height:1;display:inline-block;transform:rotate(-5deg);text-shadow:0 0 34px rgba(53,224,206,.6)}#rank.lost{color:#ff5d73;text-shadow:0 0 34px rgba(255,93,115,.6)}#ovh{font-size:13px;letter-spacing:2.5px;color:#ffd98a;text-transform:uppercase;margin:4px 0 2px}#ovsub{font-size:13px;color:#a9c3e2;line-height:1.5;margin:6px 0 14px}#stats{display:flex;justify-content:space-between;border:1px solid rgba(159,196,236,.3);border-radius:13px;padding:11px 6px;margin-bottom:8px;background:rgba(8,20,38,.8)}.st{flex:1}.st b{display:block;font-size:19px;color:#eaf4ff}.st span{display:block;font-size:9.5px;letter-spacing:1px;color:#7f97b6;text-transform:uppercase;margin-top:2px}#ovbest{font-size:12px;color:#ffd98a;margin-bottom:12px}#again{display:block;width:100%;padding:17px 10px;border-radius:14px;background:#35e0ce;color:#04222b;font-size:17px;box-shadow:0 0 24px rgba(53,224,206,.5);margin-bottom:16px}#misshead{font-size:11px;letter-spacing:2px;color:#ff9db0;text-transform:uppercase;text-align:left;margin-bottom:8px}.miss{border:1px solid rgba(255,93,115,.35);border-radius:12px;padding:11px 12px;margin-bottom:8px;background:rgba(20,10,18,.7);text-align:left}.miss .mq{font-size:13.5px;font-weight:600;line-height:1.4;color:#f2d9de}.miss .ma{font-size:13px;color:#35e0ce;margin-top:5px;line-height:1.4}.miss .mw{font-size:12.5px;color:#c2d3e8;margin-top:5px;line-height:1.5}#nomiss{font-size:13px;color:#8fe8db;text-align:left;margin-bottom:8px}.foot{font-size:10.5px;color:#6d86a6;line-height:1.5;margin-top:6px}</style>
+</head>
+<body>
+<div id="jsoff">JavaScript is off here — tap <b>Share → Open in Safari</b> (iPhone) or <b>⋮ → Open in browser</b> (Android) to play.</div>
+<script>document.getElementById('jsoff').style.display='none';</script>
+<div id="errov"></div>
+<canvas id="cv"></canvas>
+<div id="title" class="layer on">
+<div class="pane">
+<div class="kicker">REPLAY · Conference, Playable</div>
+<div class="logo disp">SECOND<br><b>WIND</b></div>
+<div class="tag">Wednesday 8/12, the whole pulmonary day, is now an Everest.<br>Climb it — riverbed to <b style="color:#35e0ce">8,900&nbsp;m summit</b> — one breath at a time.</div>
+<div class="howbox">
+<b>One job:</b> tap the right hold before your O₂ reserve runs out.<br>
+<b>Three desats</b> and the climb is over. Misses circle back as a final <b>SECOND WIND</b> push.<br>
+Six camps up the face: the debate → the river → the peds bay → the ward → the EICU → thin air. Plant a flag at each; the <b>summit flag</b> waits at 8,900&nbsp;m.
+</div>
+<div id="bestline"></div>
+<button id="start" class="disp">PREOXYGENATE ▲ CLIMB</button>
+<div class="cred">
+On today's route — everything actually said in the room:<br>
+<b>Journal club</b> · the preoxygenation debate (PREOXI vs FELLOW) + a stats primer<br>
+<b>Small groups</b> · bronchiolitis &amp; the stridulous kid<br>
+<b>Lectures</b> · drowning — altitude illness — atypical pneumonia — asthma &amp; status asthmaticus
+</div>
+<div class="legal">Educational game; defer to clinical judgment and your attending. REPLAY · Conference, Playable.</div>
+</div>
+</div>
+<div id="game" class="layer">
+<div id="flash"></div>
+<div id="hud">
+<div class="hudL"><div id="score" class="disp">0</div><div id="combo"></div><div id="altr">▲ −2,000 m</div></div>
+<div class="hudR"><div id="sat" class="ok disp">SpO₂ 98</div><div id="bestmini"></div></div>
+</div>
+<div id="qwrap">
+<div id="rtag"></div>
+<div id="prompt"></div>
+<div id="tbar"><i></i></div>
+<div id="opts"></div>
+</div>
+<div id="rb"><div id="rbn"></div><div id="rbt" class="disp"></div><div id="rbs"></div><div id="rba" class="disp"></div></div>
+</div>
+<div id="review" class="layer">
+<div class="pane">
+<span id="rvstamp" class="stamp disp">MISSED HOLD</span>
+<div id="rvsat"></div>
+<div id="rvq"></div>
+<div id="rvopts"></div>
+<div id="rvwhy"></div>
+<div id="rvwho"></div>
+<button id="resume">TAP TO KEEP CLIMBING</button>
+</div>
+</div>
+<div id="over" class="layer">
+<div class="pane">
+<div id="rank" class="disp"></div>
+<div id="ovh"></div>
+<div id="ovsub"></div>
+<div id="stats">
+<div class="st"><b id="ovscore">0</b><span>score</span></div>
+<div class="st"><b id="ovacc">0%</b><span>first-try</span></div>
+<div class="st"><b id="ovstreak">0</b><span>max streak</span></div>
+<div class="st"><b id="ovalt">0 m</b><span>peak alt</span></div>
+</div>
+<div id="ovbest"></div>
+<button id="again" class="disp">RE-PREOXYGENATE ▲ RUN IT BACK</button>
+<div id="misshead"></div>
+<div id="misslist"></div>
+<div class="foot">Educational game; defer to clinical judgment and your attending. REPLAY · Conference, Playable.</div>
+</div>
+</div>
+<script>/*APP-START*/
+"use strict";
+var DECK=[{"t":"preoxy","q":"PREOXI trial: NIV vs oxygen face mask before intubation. The primary outcome?","o":["SpO2 under 85% from induction to 2 min after the tube","First-pass intubation success without any rescue device","Cardiac arrest within 24 hours of intubation","Lowest mean SpO2 during the apneic period"],"w":"Hypoxemia as a strict yes/no cutoff, from induction through two minutes after intubation."},{"t":"preoxy","q":"PREOXI headline: preoxygenating with NIV instead of a face mask gave…","o":["Less hypoxemia — risk difference −9.4%, NNT 11","No difference at all between the two strategies","More aspiration events in the NIV study arm","Faster intubations with identical hypoxemia"],"w":"For every 11 patients preoxygenated with NIV, one fewer got hypoxemic during intubation."},{"t":"preoxy","q":"The FELLOW trial actually tested:","o":["O2 by nasal cannula during laryngoscopy in apneic patients","BiPAP preoxygenation before induction in ED patients","Manual bagging technique through the apneic period","High-flow nasal cannula compared against nonrebreather masks"],"w":"Oxygen in the nose of a patient who is not breathing — one Tennessee ICU, ICU fellows, 150 patients."},{"t":"preoxy","q":"FELLOW: 150 patients, no significant difference found. The stats-primer critique:","o":["Beta error risk — too small to rule out a real difference","Alpha error — a false positive from repeated looks","A fragility index far too high to trust the result","Confounding by indication among the sickest patients enrolled"],"w":"Concluding there is NO difference when there is one. Underpowered studies live in that cell."},{"t":"preoxy","q":"Per the stats primer, an alpha error is the probability of concluding…","o":["There IS a difference when there is NO difference","There is NO difference when one truly exists","The study was underpowered for its outcome","The confidence interval crosses the null value"],"w":"That's the classic p value. Beta is its mirror image, and power is 1 minus beta."},{"t":"preoxy","q":"A 95% CI for a DIFFERENCE is statistically significant only if it excludes:","o":["Zero","One","The point estimate","p = 0.05"],"w":"If A equals B, A minus B is zero; ratios are the ones that can't include one."},{"t":"preoxy","q":"Your study lands p = 0.058. The faculty-approved phrasing:","o":["Not statistically significant. Period.","A trend toward statistical significance","Borderline significant, worth reporting","Clinically if not statistically positive"],"w":"Don't say trend. Statistical significance is a binary yes/no question — that's all a p value does."},{"t":"preoxy","q":"PREOXI's ED subgroup — the population we actually work in — showed:","o":["Neither statistical nor clinical significance","A benefit even larger than the ICU subgroup's","A signal of harm driven by aspiration events","Nothing — it was never reported in the paper"],"w":"The faculty question landed: 5.4%, under the authors' own 6% bar, and not statistically significant."},{"t":"drown","q":"Drowning deaths, whatever the path, ultimately come from:","o":["Hypoxia","Arrhythmia from electrolyte shifts","Rewarming collapse","Aspiration pneumonia and sepsis"],"w":"Laryngospasm, surfactant washout, alveolar collapse — the final common pathway is hypoxia."},{"t":"drown","q":"White foam keeps bubbling up the drowned patient's airway. You:","o":["Push it back down with positive pressure","Suction continuously until the airway is clear","Roll them lateral and let it drain itself","Break it up with nebulized normal saline"],"w":"It's surfactant mixed with water; it just reaccumulates when suctioned. Vomit is the thing you suction."},{"t":"drown","q":"Fresh water vs salt water drowning changes your ED management.","o":["False — the electrolyte shifts are transient","True — the fluids and pressors differ"],"w":"Old teaching, retired by the societies. Manage the patient, not the water."},{"t":"drown","q":"Submersion patient: sats fine, clear lungs, GCS over 13. The plan:","o":["Watch 4–6 hours; if the exam holds, home","Admit for 24 hours of telemetry monitoring","CT chest plus a full lab panel for everyone","Prophylactic antibiotics and a repeat film"],"w":"Not everybody needs a workup — x-rays and labs aren't super useful here. It's the exam and the recheck."},{"t":"drown","q":"Post-drowning ARDS on the vent — the settings philosophy:","o":["~6 cc/kg IBW, titrate PEEP up, accept sats 88–95%","8–10 cc/kg with minimal PEEP to spare the heart","Zero PEEP with high rates to blow off the CO2","100% FiO2 and recruitment volumes until sats hit 99"],"w":"Only a few alveoli are still working — a baby lung — and you'd rather not burst the open ones."},{"t":"drown","q":"Drowning arrest, and the monitor shows VF. Your read:","o":["Unusual — hunt for a secondary cause","Expected — most drowning arrests are VF","An artifact of hypothermic myocardium","A reason to stop after three shocks"],"w":"Drowning is largely associated with NON-shockable rhythms — VF or VT should make you ask what else is going on."},{"t":"drown","q":"Pulled from cold water, now arresting and hypothermic. The teaching:","o":["Neuroprotective — rewarm before big decisions","A reason to terminate resuscitation early","The single worst prognostic sign in drowning","Only relevant if submersion was under 5 min"],"w":"Slower metabolism burns oxygen slower; rewarm first. The normothermic asystolic arrest is the early goals-talk."},{"t":"drown","q":"In the ~1,400-case series: submerged more than 60 minutes…","o":["There were no survivors","About half survived neurologically intact","Survival tracked water temperature alone","Outcomes matched the 15-minute group's"],"w":"And past 15 minutes, a neurologically intact outcome is already unlikely."},{"t":"peds","q":"Counseling bronchiolitis parents on pee: come back if the baby goes…","o":["More than 8 hours without urinating","More than 4 hours without a wet diaper","Fewer than 10 wet diapers in a day","Any amount below their usual baseline"],"w":"The numbers from small group: under six to eight wet diapers in 24 hours, or a dry stretch past eight."},{"t":"peds","q":"Why does a struggling baby grunt?","o":["Self-made auto-PEEP, stenting alveoli open","A pain response that needs treating first","An early sign of hunger and poor feeding","Upper airway obstruction from secretions"],"w":"It sounds like a cry, but the baby is stenting its own airways open."},{"t":"peds","q":"Rectal acetaminophen dose in the vomiting, febrile baby:","o":["20 mg/kg","15 mg/kg","10 mg/kg","25 mg/kg"],"w":"Versus 15 by mouth. And there is no rectal ibuprofen — small group checked, because that would be amazing."},{"t":"peds","q":"Hypertonic saline nebs for bronchiolitis in the ED:","o":["Skip them — caustic, and no ED outcome benefit","First line — they thin the secretions fastest","Useful, but only when paired with albuterol","Proven to prevent admission from the ED"],"w":"Can provoke bronchospasm; some inpatient length-of-stay data, nothing for the ED. Normal saline nebs instead."},{"t":"peds","q":"Starting high-flow at 2 L/kg in a 6 kg infant means:","o":["12 L/min","6 L/min","2 L/min","20 L/min"],"w":"Everything in peds is weight-based; 1–2 L/kg is the starting range. And no feeding on high flow — that's when the IV goes in."},{"t":"peds","q":"Maintenance fluids for that same 6 kg baby (4-2-1 rule):","o":["24 cc/hr","6 cc/hr","42 cc/hr","64 cc/hr"],"w":"4 cc/kg covers the first 10 kilos. The 24 kg kid is the one who gets 64."},{"t":"peds","q":"The stridor that should actually scare you:","o":["Stridor at rest, in a calm kid on mom's lap","Stridor only while screaming and thrashing","Any audible stridor regardless of context","Stridor that gets louder when the child cries"],"w":"Riled-up laryngomalacia sounds like the last breath. The calm kid making noise is the sick one."},{"t":"peds","q":"Racemic epi for the stridulous kid — the dose:","o":["0.5 mL/kg nebulized, max 2.5 mL","1 mL/kg nebulized, max 5 mL","0.1 mL/kg nebulized, no maximum","0.25 mL/kg nebulized, max 1 mL"],"w":"A 10 kg kid maxes it out. No racemic where you are? Use the epi you have — don't delay."},{"t":"peds","q":"Narrowest point of a 1-year-old's airway:","o":["The cricoid, a half inch below the cords","The vocal cords, exactly as in adult airways","The carina, where the mainstems branch off","The nares, before the airway even begins"],"w":"A tube that looks snug at the cords can still hang up below them. Downsize; forcing it will fail."},{"t":"peds","q":"Needle cric in an infant — connecting a bag to the angiocath:","o":["3 mL syringe barrel capped with a 7.0 ETT adapter","A 10 mL syringe with the plunger left in place","The adapter pulled off any pediatric ETT","You can't — infant needle cric has no bag option"],"w":"The MacGyver rig: plunger out, barrel onto the catheter, 7.0 tube adapter snugged into the barrel, bag on top."},{"t":"peds","q":"Your bougie slides in smoothly and just… keeps going. No clicks, no stop.","o":["Esophagus — withdraw and redirect","Trachea — railroad the tube over it","Right mainstem — pull back a touch","Perfect placement through the cords"],"w":"Tracheal rings feel like a rumble strip, and the airway stops you. The esophagus just keeps taking bougie."},{"t":"atyp","q":"The atypical bacterial triad:","o":["Mycoplasma, Chlamydia pneumoniae, Legionella","Staph aureus, Strep pneumo, H. influenzae","Pseudomonas, MRSA, and Klebsiella species","TB, Nocardia, and Aspergillus species"],"w":"Plus all the viruses and the zoonotic and vector-borne causes — anything beyond your typicals."},{"t":"atyp","q":"Why amoxicillin whiffs completely on atypical pneumonia:","o":["These bugs have no cell wall to attack","Beta-lactamase enzymes chew the drug up first","Their thick capsule blocks drug penetration","Efflux pumps clear the antibiotic immediately"],"w":"Penicillin-type drugs need a wall. No wall — so you add azithro or doxy."},{"t":"atyp","q":"Summer pneumonia + GI symptoms + confusion + hyponatremia. Front of mind:","o":["Legionella","Mycoplasma","C. pneumoniae","Strep pneumo"],"w":"GI losses plus cytokine-mediated SIADH drop the sodium; transaminitis and a high ferritin fit too. Hits smokers, the elderly, the sicker ICU crowd."},{"t":"atyp","q":"How Legionella actually gets to people:","o":["Aerosolized water — towers, showers, hot tubs","Respiratory droplets from person to person","Contaminated food and unpasteurized dairy","Mosquito bites through the late summer"],"w":"The #1 waterborne illness in the country, and it loves old cities with aging pipes. Breathe in the mist."},{"t":"atyp","q":"The Legionella urine antigen — easy test, but the catch:","o":["It detects only one serotype","It takes two full weeks to result","It needs an invasive catheterized sample","It cross-reacts with strep pneumo antigen"],"w":"Weak for outbreak tracking — sputum PCR sees more serotypes. And it gram stains poorly; think silver stain."},{"t":"atyp","q":"Pontiac fever is:","o":["Legionella without full-blown pneumonia","The severe ICU form of legionellosis","Mycoplasma's classic rash-and-fever form","A heat illness that mimics pneumonia"],"w":"The lucky young person's version of the bug — self-limited and viral-feeling, gone in 4–5 days."},{"t":"atyp","q":"CURB-65 of 0 or 1 tells you:","o":["Odds are good they'll do OK at home","An automatic ICU-level admission","A mandatory 48-hour observation stay","Too little information to act on at all"],"w":"Three or more is the score that should really worry you. But scores don't have eyes — look at the patient."},{"t":"atyp","q":"CURB-65 vs the PSI, per the MDCalc line quoted in lecture:","o":["Equal mortality sensitivity, higher specificity","Higher sensitivity but far lower specificity","Better than PSI on every single test metric","Identical to PSI across all the outcomes"],"w":"And PSI predicts ICU admission better — ammo for the MICU conversation. CURB-65 is for the go-home call."},{"t":"atyp","q":"The virus that puts little kids in the hospital 'when they're super, super sick':","o":["Human metapneumovirus","Rhinovirus","Adenovirus","Parainfluenza virus type 3"],"w":"hMPV doesn't get talked about much — and it really gets little kids bad."},{"t":"asthma","q":"34F severe asthmatic in the slot. First VBG: pH 7.48, pCO2 29. That picture is:","o":["Early exacerbation — hyperventilating CO2 off","Impending failure — set up to intubate now","Chronic compensation, like a COPD retainer","A mixed metabolic-respiratory acidosis"],"w":"Breathing fast blows the CO2 down. Normal bicarb says early, not chronic. (The O2 on a VBG? Not super useful.)"},{"t":"asthma","q":"The history detail that flags her as likely to crash:","o":["An ICU stay with intubation ~4 years ago","Daily montelukast on top of her Symbicort","A viral URI prodrome over the last 3 days","Her age and lack of prior ED admissions"],"w":"Prior tube, plus albuterol every 1–2 hours today with minimal relief — recognize the high-risk asthmatic early."},{"t":"asthma","q":"She's on 6L nasal cannula. Why not just move her to a nonrebreather?","o":["An NRB can't run her nebs at the same time","The NC actually delivers a higher FiO2","NRBs cause CO2 retention in asthmatics","An NRB would hide her work of breathing"],"w":"Six liters NC keeps the duonebs flowing — albuterol on the beta side, ipratropium blocking acetylcholine."},{"t":"asthma","q":"IV magnesium in asthma — the honest evidence:","o":["Not well studied; shortens admitted stays","A proven mortality benefit in severe attacks","Proven to prevent intubation if given early","No data at all — it's pure habit and folklore"],"w":"Which is why you often skip it for the patient you're planning to discharge."},{"t":"asthma","q":"Repeat VBG: pH 7.37, pCO2 42 — technically 'normal.' She looks worse. Your read:","o":["Ominous — the respiratory drive is failing","Reassuring — start planning the discharge","Expected — the duonebs are clearly working","A lab artifact from the venous sampling"],"w":"A normalizing CO2 in a tiring asthmatic means the compensation is failing, not the disease."},{"t":"asthma","q":"Her wheeze is getting QUIETER and air movement worse. That means:","o":["She's worse — less air is moving","She's opening up — the nebs landed","Improved — quiet lungs are open lungs","A neutral finding without a peak flow"],"w":"Silent is scarier than loud. By the last gas her lungs are near-silent and she's altered."},{"t":"asthma","q":"Status asthmaticus, per the slide:","o":["Bronchospasm despite bronchodilators AND steroids","Any exacerbation severe enough to require admission","Asthma with fever, hypoxia, and infiltrates","A first-ever wheeze needing continuous nebs"],"w":"Persistent, life-threatening, unresponsive to the standard treatments — that's the definition and the pivot point."},{"t":"asthma","q":"Heliox's built-in limitation:","o":["FiO2 caps out around 20–30%","It worsens bronchospasm in severe attacks","It needs an invasive airway to deliver","It takes an hour to show any benefit"],"w":"70/30 or 80/20 helium-oxygen to cut turbulent flow. Usually fine — asthma is an exhalation problem, not an oxygenation problem."},{"t":"asthma","q":"She's fighting the BiPAP. The one opioid to AVOID:","o":["Morphine — histamine release worsens things","Fentanyl — too much chest wall rigidity","Dilaudid — it accumulates in status","All of them equally — no opioid is safe here"],"w":"Fentanyl and Dilaudid can be very high reward here. Ketamine and Precedex are the anxiolytics of choice — both bronchodilate."},{"t":"asthma","q":"Crashing asthmatic needs a pressor. First choice from the talk:","o":["Epinephrine","Norepinephrine","Vasopressin","Phenylephrine"],"w":"The same way it treats an allergic reaction — you're also relieving bronchoconstriction."},{"t":"asthma","q":"Why is intubating a severe asthmatic uniquely dangerous?","o":["Positive pressure lands on already-gutted preload","The distorted anatomy hides the vocal cords","The aspiration risk from a stomach full of swallowed air","It isn't — early intubation is the safest path"],"w":"Hyperinflation cut the preload, and apnea steals the rate her pH depends on. Minimize time without ventilation."},{"t":"asthma","q":"Tube size for the asthmatic, and the real reason:","o":["Large, ~8.0 — smallest that fits a bronchoscope","Small, 6.0 — to slip past the bronchospasm","A 7.0 cuffed — the standard for adult women","Cuffless — to lower the airway resistance"],"w":"They end up needing bronc, and you want the airway held as open as possible. Then bag gently and slowly, albuterol running."},{"t":"asthma","q":"Post-intubation vent recipe for asthma:","o":["VT 6–8, RR 10–14, PEEP 0–5, long expiration","VT 10, RR 24, PEEP 10 to stent airways open","Pressure support alone with a high backup rate","VT 4, RR 30, PEEP 15 — full ARDSnet settings"],"w":"Everything buys exhale time: I:E near 1:4–1:5, tolerate pH down to 7.20, keep the plateau under 30."},{"t":"asthma","q":"Vent alarming, volumes stacking. Before you touch the extrinsic PEEP knob:","o":["An expiratory hold to measure the autoPEEP","Extubate and go straight back to the BiPAP","Silence the alarm and deepen the sedation","Raise extrinsic PEEP until the alarms stop"],"w":"Know how much PEEP is intrinsic first. Then longer expiratory time: drop the rate or the tidal volume; paralyze for synchrony."},{"t":"asthma","q":"Intubated asthmatic suddenly unstable, minute ventilation gone. The move:","o":["Disconnect the circuit, press on the chest","Crank the PEEP to splint the airways open","Double the rate to restore minute volume","Push a bigger tidal volume with each breath"],"w":"Get the trapped air out — the recurring move of the whole talk."},{"t":"asthma","q":"Her VV-ECMO candidacy — under 40 with status asthmaticus:","o":["Very good — call early, before an arrest","Poor — asthma rarely qualifies for ECMO","Contraindicated by her acidemia and age","Only on the table after a failed arrest"],"w":"Cannulation takes time and an arrest worsens candidacy. VV ECMO lives at both Tisch and Bellevue."},{"t":"asthma","q":"Worth hunting for on the asthmatic's chest x-ray:","o":["Spontaneous pneumothorax, pneumomediastinum","A dense lobar consolidation with bronchograms","Cardiomegaly with cephalized vasculature","Bilateral layering pleural effusions"],"w":"Pneumomediastinum gets oxygen and time to absorb — which is also the treatment for a small pneumothorax."},{"t":"alt","q":"Acute mountain sickness in one line:","o":["Headache + hangover feel, 6–12h after arrival","Coma within an hour of reaching the summit","A dry nocturnal cough with normal energy","Facial swelling and blurred vision on day 5"],"w":"Settles in 1–2 days if you stop ascending; persisting past a week means descend."},{"t":"alt","q":"Your tentmate has AMS at 3,900 m. The treatment plan:","o":["Stop ascending; acetazolamide 250 q12 ± dex 4 q6","Push to the next camp and reassess at dinner","Prophylactic nifedipine plus forced fluids","Immediate helicopter evacuation for every single case"],"w":"Treatment dosing is double the 125 mg prophylaxis dose. Worsening, or persisting past a week? Descend."},{"t":"alt","q":"The headache stops answering NSAIDs, vomiting starts, now they're ataxic:","o":["HACE — descend immediately","Still AMS — hydrate and push on","Simple dehydration plus sun exposure","A classic migraine triggered by cold"],"w":"AMS and HACE are points on one spectrum; ataxia and neuro signs are the tripwire. Descent at the FIRST neuro sign."},{"t":"alt","q":"Dexamethasone for HACE:","o":["8 mg load, then 4 mg every 6 hours","4 mg once at the onset of symptoms","100 mg IV as a single rescue bolus","A 2-week taper starting at 60 mg"],"w":"AMS dosing is 4 every 6. Give it with oxygen while you engineer the descent."},{"t":"alt","q":"Dex got your climber feeling great at 4,800 m. The catch:","o":["It masks symptoms without acclimatizing them","It permanently blunts the hypoxic ventilatory drive","It only works when paired with diuretics","Rebound is a myth — no taper is needed"],"w":"Dex does not facilitate acclimatization. Stop it and the symptoms can come roaring back."},{"t":"alt","q":"Comatose HACE patient — you're bagging while packaging. The one thing NOT to do:","o":["Hyperventilate them into deeper alkalosis","Give oxygen before the dexamethasone loads","Push dexamethasone 8 mg through the IO","Reach for hypertonic saline for the edema"],"w":"They're already respiratory-alkalotic from altitude. Oxygen, dex, hypertonic saline, and DESCENT are the moves."},{"t":"alt","q":"The Gamow bag in the expedition kit does what?","o":["Simulates 1,500–2,500 m of descent by pressure","Delivers 100% oxygen at triple the flow rate","Rewarms the core with circulating warm air","Splints the chest to slow the breathing down"],"w":"A temporizing hyperbaric shell — pump it up while you arrange the real descent."},{"t":"alt","q":"Acetazolamide accelerates acclimatization by:","o":["Dumping bicarb so ventilation can stay high","Sedating the brain's nighttime hypoxic alarm","Diuresing edema fluid directly off the lungs","Blocking EPO so the blood stays thinner"],"w":"Carbonic anhydrase inhibition in the proximal tubule — metabolic acidosis takes the brake off breathing. 125 mg q12 starting the day before ascent."},{"t":"alt","q":"Your hiking buddy on acetazolamide will report:","o":["Flat-tasting beer, tingly fingers, lots of peeing","Bradycardia, oddly vivid dreams, and a metallic taste","Constipation, dark urine, and blurred vision","Weight gain and morning facial puffiness"],"w":"Carbonated drinks lose their fizz, paresthesias, polyuria — and mind the sulfa-allergy question."},{"t":"alt","q":"Day 3 at altitude: cough turns productive with pink frothy sputum. This is:","o":["HAPE","Bronchitis","Worsening AMS","Pneumonia"],"w":"Non-cardiogenic edema from uneven hypoxic vasoconstriction. Untreated mortality is around 50% — oxygen and descent reverse it fast."},{"t":"alt","q":"First-line DRUG for HAPE (after oxygen and descent):","o":["Nifedipine","Furosemide","Morphine","Nitroglycerin"],"w":"Drop the pulmonary artery pressure. No lasix — they're volume depleted — and morphine suppresses the ventilatory response keeping them alive."},{"t":"alt","q":"No nifedipine in the kit. Second-line drug class for HAPE, and its catch:","o":["PDE5 inhibitors — but they can worsen AMS/HACE","Loop diuretics — but only with oral rehydration","Beta agonist nebs — but tachycardia limits them","Opioids — but respiratory depression limits them"],"w":"Tadalafil or sildenafil drop pulmonary pressures but vasodilate the brain too. Oxygen stays the first-line therapy."},{"t":"alt","q":"Sleeping-altitude rule once you're above 3,000 m:","o":["No more than ~500 m of sleeping gain a night","Climb high, sleep high — adaptation needs stress","1,000 m a night is fine below the snow line","Rest days hurt — momentum drives adaptation"],"w":"Plus a rest day every 3–4 days. Rate of ascent is THE modifiable risk factor. Garlic, notably, is not protective."}];
+var ORDER=["preoxy","drown","peds","atyp","asthma","alt"];
+var DRAW={preoxy:3,drown:4,peds:4,atyp:4,asthma:5,alt:5};
+var ROUND_META={
+preoxy:{t:"BASE CAMP",s:"Journal club. Build the reserve before the plunge.",z:0},
+drown:{t:"THE RIVER",s:"Break the surface. The drowning talk.",z:1},
+peds:{t:"THE PEDS BAY",s:"Small groups: washing-machine lungs and the scary stridor.",z:2},
+atyp:{t:"THE WARD",s:"Atypical pneumonia. No cell wall, no mercy.",z:3},
+asthma:{t:"THE EICU",s:"Status asthmaticus. Buy her exhale time.",z:4},
+alt:{t:"THIN AIR",s:"Summit push. Altitude illness.",z:5},
+sw:{t:"SECOND WIND",s:"Your misses come back. Clear the mountain.",z:6}
+};
+var WHO={
+preoxy:"Journal club: the preoxygenation debate + stats primer",
+drown:"The drowning lecture",
+peds:"Peds small groups: bronchiolitis & the stridulous kid",
+atyp:"The atypical pneumonia lecture",
+asthma:"Critical care lecture: asthma & status asthmaticus",
+alt:"The altitude illness lecture"
+};
+var SAT_STAGES=[98,91,85];        
+var SUMMIT=8900, START_ALT=-2000, CLIMB=(SUMMIT-START_ALT)/25;
+var mode="title";            // title | banner | play | commit | review | over
+var simNow=0, sched=[], schedSeq=0;
+var rounds=[], roundIdx=-1, curItems=null, cur=null, curPerm=null, curTime=0, tLeft=0;
+var swPend=[], inSW=false;
+var score=0, best=0, combo=0, maxStreak=0, misses=0, seen=0, firstRight=0, altM=START_ALT, peakAlt=START_ALT;
+var missLog=[], itemFlags=null, lastPick=-1, won=false;
+var hitStop=0, shakeT=0, world={y:0,v:42,burst:0,bob:0};
+var pops=[], parts=[], AC=null;
+function $(id){return document.getElementById(id);}
+function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t;}return a;}
+function after(ms,fn){sched.push({at:simNow+ms,fn:fn,id:++schedSeq});}
+function clearSched(){sched=[];}
+function fmtAlt(m){m=Math.round(m);return (m<0?"−"+Math.abs(m):String(m).replace(/\B(?=(\d{3})+(?!\d))/g,","))+" m";}
+function vib(ms){try{if(navigator.vibrate)navigator.vibrate(ms);}catch(e){}}
+function audio(){try{if(!AC){var C=window.AudioContext||window.webkitAudioContext;if(C)AC=new C();}
+if(AC&&AC.state==="suspended")AC.resume();}catch(e){AC=null;} return AC;}
+function tone(f,dur,type,vol,slide){var a=audio();if(!a)return;try{
+var o=a.createOscillator(),g=a.createGain(),t=a.currentTime;
+o.type=type||"square";o.frequency.setValueAtTime(f,t);
+if(slide)o.frequency.exponentialRampToValueAtTime(slide,t+dur);
+g.gain.setValueAtTime(0.0001,t);g.gain.exponentialRampToValueAtTime(vol||0.08,t+0.012);
+g.gain.exponentialRampToValueAtTime(0.0001,t+dur);
+o.connect(g);g.connect(a.destination);o.start(t);o.stop(t+dur+0.02);}catch(e){}}
+function sfxGood(){tone(340+Math.min(combo,12)*45,0.09,"square",0.07);tone(680+Math.min(combo,12)*45,0.14,"triangle",0.05);}
+function sfxBad(){tone(160,0.22,"sawtooth",0.09,70);}
+function sfxRound(){tone(220,0.3,"triangle",0.06,440);}
+function sfxOver(w){if(w){tone(523,0.12,"square",0.07);tone(659,0.12,"square",0.07);tone(784,0.3,"triangle",0.08);}
+else tone(220,0.5,"sawtooth",0.08,55);}
+function bindTap(el,fn){
+var h=function(ev){if(ev.cancelable)ev.preventDefault();fn(ev);};
+if(window.PointerEvent){el.addEventListener("pointerdown",h);}
+else{el.addEventListener("touchstart",h,{passive:false});el.addEventListener("mousedown",h);}
+}
+var LAYERS=["title","game","review","over"];
+function show(name){clearSched();
+for(var i=0;i<LAYERS.length;i++){var el=$(LAYERS[i]);if(LAYERS[i]===name)el.classList.add("on");else el.classList.remove("on");}}
+function buildRun(){
+var byT={},i;for(i=0;i<DECK.length;i++){var k=DECK[i].t;(byT[k]=byT[k]||[]).push(DECK[i]);}
+rounds=[];itemFlags={};
+for(i=0;i<ORDER.length;i++){var k2=ORDER[i],pool=shuffle(byT[k2].slice()),take=pool.slice(0,DRAW[k2]);
+rounds.push({key:k2,items:take});}
+}
+function startRun(){
+audio();buildRun();
+mode="banner";roundIdx=-1;curItems=null;cur=null;swPend=[];inSW=false;
+score=0;combo=0;maxStreak=0;misses=0;seen=0;firstRight=0;missLog=[];won=false;
+altM=START_ALT;peakAlt=START_ALT;pops=[];hitStop=0;shakeT=0;world.burst=0;
+camps=[];setAltHud();
+$("score").textContent="0";$("combo").textContent="";
+$("bestmini").textContent=best>0?("BEST "+best):"";
+setSat();show("game");nextRound();
+}
+function nextRound(){
+roundIdx++;
+var meta;
+if(roundIdx<rounds.length){curItems=rounds[roundIdx].items;meta=ROUND_META[rounds[roundIdx].key];inSW=false;}
+else if(swPend.length){curItems=shuffle(swPend.slice());swPend=[];meta=ROUND_META.sw;inSW=true;}
+else{endRun(true);return;}
+camps.push({a:altM,x:xOfA(altM),n:meta.t});setAltHud();
+$("rbn").textContent="CAMP "+Math.min(roundIdx+1,7)+" of "+(rounds.length+(inSW||swPend.length?1:0));
+$("rbt").textContent=meta.t;$("rbs").textContent=meta.s;
+$("rba").textContent="▲ "+fmtAlt(altM)+(roundIdx<rounds.length?" · climb on":" · summit push");
+$("rtag").textContent=meta.t;
+$("prompt").textContent="";$("opts").innerHTML="";$("tbar").firstElementChild.style.width="100%";
+mode="banner";$("rb").classList.add("show");sfxRound();
+after(1450,function(){$("rb").classList.remove("show");after(180,dealNext);});
+}
+function timeFor(it){
+var longest=0,i;for(i=0;i<it.o.length;i++)if(it.o[i].length>longest)longest=it.o[i].length;
+var L=it.q.length+longest, bin=it.o.length<3, lo=bin?10080:11520, hi=bin?20160:31680;
+var base=Math.min(Math.max((3400+46*L)*2.09,lo),hi);
+var t=base*Math.pow(0.945,Math.min(roundIdx,6))*(combo>=8?0.9:1);
+return Math.max(t,lo*0.78);
+}
+function dealNext(){
+if(mode==="over")return;
+if(!curItems.length){nextRound();return;}
+cur=curItems.shift();lastPick=-1;
+var n=cur.o.length,perm=[],i;for(i=0;i<n;i++)perm.push(i);shuffle(perm);curPerm=perm;
+$("prompt").textContent=cur.q;
+var box=$("opts");box.innerHTML="";
+for(i=0;i<n;i++){(function(pos){
+var b=document.createElement("button");b.className="ledge";
+b.innerHTML='<span class="k">'+(pos+1)+'</span>';
+b.appendChild(document.createTextNode(cur.o[perm[pos]]));
+bindTap(b,function(){choose(pos);});
+box.appendChild(b);
+after(40+pos*45,function(){b.classList.add("in");});
+})(i);}
+curTime=timeFor(cur);tLeft=curTime;mode="play";
+}
+function ledges(){return $("opts").children;}
+function lockLedges(pos,good){
+var ls=ledges(),i;
+for(i=0;i<ls.length;i++){
+if(i===pos)ls[i].classList.add(good?"hit":"bad");
+else if(curPerm[i]===0&&!good)ls[i].classList.add("hit");
+else ls[i].classList.add("dim");
+}
+}
+function choose(pos){
+if(mode!=="play")return;
+mode="commit";lastPick=pos;
+var firstLook=!inSW&&!cur._re;
+if(firstLook)seen++;
+if(curPerm[pos]===0){ 
+if(firstLook)firstRight++;
+combo++;if(combo>maxStreak)maxStreak=combo;
+var pts=100+Math.floor(60*(tLeft/curTime))+Math.min(combo*4,40);
+score+=pts;$("score").textContent=String(score);
+$("combo").textContent=combo>1?("×"+combo+" STREAK"):"";
+var gain=(cur._re||inSW)?CLIMB/2:CLIMB;altM=Math.min(SUMMIT,altM+gain);if(altM>SUMMIT-0.5)altM=SUMMIT;if(altM>peakAlt)peakAlt=altM;
+lockLedges(pos,true);world.burst=340;setAltHud();pop("+"+pts);sfxGood();
+after(320,dealNext);
+}else miss(false,pos);
+}
+function miss(timeout,pos){
+mode="commit";
+var firstLook=!inSW&&!cur._re;
+if(timeout&&firstLook)seen++; 
+combo=0;$("combo").textContent="";
+misses++;setSat();
+if(missLog.length<40){var dup=false,i;for(i=0;i<missLog.length;i++)if(missLog[i]===cur)dup=true;if(!dup)missLog.push(cur);}
+if(!inSW){var c={};for(var k in cur)c[k]=cur[k];c._re=true;swPend.push(c);}
+else{var c2={};for(var k2 in cur)c2[k2]=cur[k2];c2._re=true;
+curItems.splice(Math.min(curItems.length,2+Math.floor(Math.random()*2)),0,c2);}
+lockLedges(typeof pos==="number"?pos:-1,false);
+hitStop=100;shakeT=260;flashRed();vib(60);sfxBad();
+if(misses>=3){after(600,function(){endRun(false);});}
+else after(430,showReview.bind(null,timeout));
+}
+function showReview(timeout){
+$("rvstamp").textContent=timeout?"OUT OF AIR":"MISSED HOLD";
+$("rvsat").textContent="SpO₂ falls to "+SAT_STAGES[Math.min(misses,2)]+"% — "+(3-misses)+" desat"+(3-misses===1?"":"s")+" left";
+$("rvq").textContent=cur.q;
+var box=$("rvopts");box.innerHTML="";
+for(var i=0;i<cur.o.length;i++){var d=document.createElement("div");d.className="rvopt";
+if(curPerm&&typeof lastPick==="number"&&lastPick>=0&&curPerm[lastPick]===i&&i!==0)d.className+=" picked";
+if(i===0)d.className+=" right";
+d.textContent=(i===0?"✓ ":"")+cur.o[i];box.appendChild(d);}
+$("rvwhy").textContent=cur.w;
+$("rvwho").textContent=WHO[cur.t]||"";
+show("review");mode="review";
+}
+function resume(){
+if(mode!=="review")return;
+show("game");mode="banner";
+after(140,dealNext);
+}
+function timeoutMiss(){miss(true,-1);}
+function gradeOf(acc,livesLeft,w){
+if(w){if(acc>=90&&livesLeft>=2)return"S";if(acc>=84)return"A+";if(acc>=76)return"A";
+if(acc>=68)return"B+";if(acc>=58)return"B";if(acc>=48)return"C+";return"C";}
+return acc>=60?"C":(acc>=42?"D+":"D");
+}
+function endRun(w){
+won=w;mode="over";
+var acc=seen>0?Math.round(100*firstRight/seen):0, livesLeft=3-misses;
+var g=gradeOf(acc,livesLeft,w);
+if(score>best)best=score;
+$("rank").textContent=g;$("rank").className="disp"+(w?"":" lost");
+$("ovh").textContent=w?(peakAlt>=SUMMIT?"SUMMIT · 8,900 m":"CLIMB COMPLETE"):"CRITICAL DESAT";
+$("ovsub").textContent=w?"Every camp cleared. The mountain remembers your misses below.":
+"Third desat — below 90 the curve drops precipitously. Disconnect, press on the chest, go again.";
+$("ovscore").textContent=String(score);$("ovacc").textContent=acc+"%";
+$("ovstreak").textContent=String(maxStreak);$("ovalt").textContent=fmtAlt(peakAlt);
+$("ovbest").textContent="SESSION BEST "+best;
+var ml=$("misslist");ml.innerHTML="";
+if(!missLog.length){$("misshead").textContent="";ml.innerHTML='<div id="nomiss">No misses. A clean line to the summit — S-tier air discipline.</div>';}
+else{$("misshead").textContent="THE MISS LIST · READ ON THE WAY DOWN";
+for(var i=0;i<missLog.length;i++){var m=missLog[i],d=document.createElement("div");d.className="miss";
+var q=document.createElement("div");q.className="mq";q.textContent=m.q;
+var a=document.createElement("div");a.className="ma";a.textContent="✓ "+m.o[0];
+var wdiv=document.createElement("div");wdiv.className="mw";wdiv.textContent=m.w+"  ("+(WHO[m.t]||"")+")";
+d.appendChild(q);d.appendChild(a);d.appendChild(wdiv);ml.appendChild(d);}}
+show("over");sfxOver(w);
+}
+function setSat(){
+var el=$("sat");
+if(misses<=0){el.textContent="SpO₂ 98";el.className="ok disp";}
+else if(misses===1){el.textContent="SpO₂ 91";el.className="warn disp";}
+else if(misses===2){el.textContent="SpO₂ 85";el.className="bad disp";}
+else{el.textContent="SpO₂ --";el.className="bad disp";}
+}
+function flashRed(){var f=$("flash");f.style.opacity="0.42";after(120,function(){f.style.opacity="0";});}
+function pop(txt){pops.push({t:0,txt:txt});}
+var cv=$("cv"),cx=null;try{cx=cv.getContext("2d");}catch(e){}
+var W=380,H=700,DPR=1,PX=0.22,SNOWL=5300,camps=[];
+var hikerA=START_ALT,walkPh=0,puffs=[],lastPuff=0;
+var NZ=[];(function(){for(var i=0;i<64;i++)NZ.push(Math.random());})();
+function nz(v){var b=Math.floor(v),i=((b%64)+64)%64,j=(i+1)%64,f=v-b;f=f*f*(3-2*f);return NZ[i]+(NZ[j]-NZ[i])*f;}
+function grad(a){if(a<0)return 0.35;if(a<1500)return 2.6;if(a<3500)return 1.9;
+if(a<5300)return 1.4;if(a<6100)return 0.9;if(a<7900)return 0.75;return 0.6;}
+var A2X=[],TOTX=0;(function(){var x=0,a=START_ALT;
+while(a<=SUMMIT){A2X.push(x);x+=grad(a)*25;a+=25;}TOTX=A2X[A2X.length-1];})();
+function xOfA(q){if(q<START_ALT)q=START_ALT;if(q>SUMMIT)q=SUMMIT;
+var p=(q-START_ALT)/25,i=Math.floor(p);if(i>=A2X.length-1)return A2X[A2X.length-1];
+return A2X[i]+(A2X[i+1]-A2X[i])*(p-i);}
+var X2A=[];(function(){var xi=0,ptr=0;
+while(xi<=TOTX){while(ptr<A2X.length-2&&A2X[ptr+1]<xi)ptr++;
+var x0=A2X[ptr],x1=A2X[ptr+1],f=x1===x0?0:(xi-x0)/(x1-x0);
+X2A.push(START_ALT+(ptr+f)*25);xi+=40;}})();
+function altOfX(xw){if(xw<=0)return START_ALT;
+if(xw>=TOTX)return SUMMIT-(xw-TOTX)*1.1;
+var p=xw/40,i=Math.floor(p);if(i>=X2A.length-1)return X2A[X2A.length-1];
+return X2A[i]+(X2A[i+1]-X2A[i])*(p-i);}
+function ripple(xw,b){var amp,lam;
+if(b<0){amp=60;lam=600;}else if(b<1500){amp=45;lam=900;}else if(b<3500){amp=55;lam=520;}
+else if(b<5300){amp=45;lam=430;}else if(b<6100){amp=95;lam=190;}
+else if(b<7900){amp=40;lam=420;}else{amp=28;lam=260;}
+var s=Math.min(1,Math.abs(xw-TOTX)/600);
+return (nz(xw/lam)-0.5)*2*amp*s;}
+function groundAlt(xw){var b=altOfX(xw);return b+ripple(xw,b);}
+var camX=0;
+function sX(xw,par){return 0.34*W+(xw-camX)*PX*(par||1);}
+function sY(a,par){return 0.56*H+(hikerA-a)*PX*(par||1);}
+var CLOUDS=[];(function(){for(var i=0;i<11;i++){var ca=2500+Math.random()*2100;
+CLOUDS.push({x:xOfA(ca)+(Math.random()-0.5)*2600,a:ca,r:26+Math.random()*30});}})();
+var SKYB=[[-2000,[3,21,29],[7,64,79]],[0,[18,41,63],[63,111,149]],[2000,[16,31,56],[51,96,140]],
+[4500,[11,23,48],[39,74,118]],[6500,[7,14,36],[22,48,90]],[8900,[4,8,26],[14,31,66]]];
+function skyc(a){var i;for(i=0;i<SKYB.length-2;i++)if(a<=SKYB[i+1][0])break;
+var s0=SKYB[i],s1=SKYB[i+1],f=(a-s0[0])/(s1[0]-s0[0]);f=Math.max(0,Math.min(1,f));
+function mix(c0,c1){return "rgb("+Math.round(c0[0]+(c1[0]-c0[0])*f)+","+
+Math.round(c0[1]+(c1[1]-c0[1])*f)+","+Math.round(c0[2]+(c1[2]-c0[2])*f)+")";}
+return [mix(s0[1],s1[1]),mix(s0[2],s1[2])];}
+function resize(){W=window.innerWidth||380;H=window.innerHeight||700;
+DPR=Math.min(window.devicePixelRatio||1,2);
+cv.width=Math.round(W*DPR);cv.height=Math.round(H*DPR);
+cv.style.width=W+"px";cv.style.height=H+"px";
+if(cx)cx.setTransform(DPR,0,0,DPR,0,0);seedParts();}
+function seedParts(){parts=[];for(var i=0;i<46;i++)parts.push({x:Math.random()*W,y:Math.random()*H,
+r:1+Math.random()*2.6,s:0.5+Math.random()*0.9,p:Math.random()*6.28});}
+function flagPole(x,y,label,big){
+cx.strokeStyle="rgba(234,245,255,0.85)";cx.lineWidth=big?2:1.4;
+cx.beginPath();cx.moveTo(x,y);cx.lineTo(x,y-(big?18:12));cx.stroke();
+cx.fillStyle=big?"#ff5d73":"#ffd98a";
+cx.beginPath();cx.moveTo(x,y-(big?18:12));cx.lineTo(x+(big?14:10),y-(big?14:9));cx.lineTo(x,y-(big?10:6));cx.closePath();cx.fill();
+if(label){cx.fillStyle="rgba(234,245,255,0.8)";cx.font=(big?"bold 10px":"8px")+" -apple-system,Arial";
+cx.fillText(label,x+(big?17:12),y-(big?12:7));}}
+function drawHiker(gy){
+var g=grad(hikerA),lean=Math.min(0.55,0.95/g),hx=0.34*W,hy=gy;
+var moving=Math.abs(altM-hikerA)>2,sw=moving?Math.sin(walkPh)*4:0,sw2=moving?Math.sin(walkPh+3.14)*4:0;
+cx.save();cx.translate(hx,hy-13);cx.rotate(-lean);
+cx.strokeStyle="rgba(215,228,245,0.85)";cx.lineWidth=1;
+cx.beginPath();cx.moveTo(4,-6);cx.lineTo(11+sw*0.6,13);cx.stroke();
+cx.beginPath();cx.moveTo(-2,-5);cx.lineTo(-7+sw2*0.6,14);cx.stroke();
+cx.strokeStyle="#3a4a6e";cx.lineWidth=3;
+cx.beginPath();cx.moveTo(0,0);cx.lineTo(4+sw,13);cx.stroke();
+cx.beginPath();cx.moveTo(0,0);cx.lineTo(-3+sw2,13);cx.stroke();
+cx.fillStyle="#141c30";cx.fillRect(2+sw,11,5,3);cx.fillRect(-5+sw2,12,5,3);
+cx.fillStyle="#ffd98a";cx.fillRect(-9,-13,6,11);
+if(hikerA>7500){cx.fillStyle="#b4c8e1";cx.fillRect(-8,-17,3,4);}
+cx.strokeStyle="#ff5d73";cx.lineWidth=4;
+cx.beginPath();cx.moveTo(0,0);cx.lineTo(2,-12);cx.stroke();
+cx.lineWidth=3;
+cx.beginPath();cx.moveTo(1,-9);cx.lineTo(6,-5);cx.stroke();
+cx.beginPath();cx.moveTo(1,-10);cx.lineTo(-4,-6);cx.stroke();
+cx.fillStyle="#ecf4ff";cx.beginPath();cx.arc(3,-16,3.4,0,6.28);cx.fill();
+cx.strokeStyle="#ff5d73";cx.lineWidth=2;
+cx.beginPath();cx.arc(3,-16,4.4,2.1,5.9);cx.stroke();
+if(hikerA>7500){cx.strokeStyle="#b4c8e1";cx.beginPath();cx.moveTo(4,-14);cx.lineTo(7,-12);cx.stroke();}
+if(hikerA>6500||hikerA<0){cx.fillStyle="rgba(53,224,206,0.13)";
+cx.beginPath();cx.moveTo(5,-16);cx.lineTo(26,-24);cx.lineTo(26,-9);cx.closePath();cx.fill();}
+cx.restore();
+return {x:hx,y:hy-24};}
+function drawWeather(dt,wy){
+var a=hikerA,i,p;
+for(i=0;i<parts.length;i++){p=parts[i];
+if(a<0){p.y-=(46+world.burst)*dt/1000*p.s;
+if(p.y>wy){cx.fillStyle="rgba(120,220,230,0.35)";cx.beginPath();
+cx.arc(p.x+Math.sin(p.p+simNow/600)*6,p.y,p.r,0,6.28);cx.fill();}}
+else if(a<3400){p.y+=(16+world.burst*0.4)*dt/1000*p.s;p.x-=6*dt/1000*p.s;
+cx.fillStyle="rgba(205,220,242,0.08)";cx.beginPath();
+cx.arc(p.x+Math.sin(p.p+simNow/900)*10,p.y,p.r*6,0,6.28);cx.fill();}
+else if(a<5300){p.x-=(70+world.burst)*dt/1000*p.s;p.y+=8*dt/1000;
+cx.fillStyle="rgba(236,245,255,0.14)";cx.fillRect(p.x,p.y,26,1.5);}
+else if(a<7300){p.y+=(52+world.burst*0.5)*dt/1000*p.s;p.x-=20*dt/1000*p.s;
+cx.fillStyle="rgba(236,245,255,0.55)";cx.beginPath();
+cx.arc(p.x+Math.sin(p.p+simNow/700)*7,p.y,p.r,0,6.28);cx.fill();}
+else{p.x-=(150+world.burst)*dt/1000*p.s;p.y+=(70)*dt/1000*p.s;
+cx.strokeStyle="rgba(236,245,255,0.5)";cx.lineWidth=1;
+cx.beginPath();cx.moveTo(p.x,p.y);cx.lineTo(p.x+7,p.y-3);cx.stroke();}
+if(inSW){cx.fillStyle="rgba(60,220,190,0.10)";cx.fillRect(p.x,(p.y*1.7)%H,3,26);}
+if(p.y>H+16)p.y=-16;if(p.y<-18)p.y=H+14;
+if(p.x>W+30)p.x=-30;if(p.x<-32)p.x=W+28;}}
+function draw(dt){
+if(!cx)return;
+camX=xOfA(hikerA);
+var sx=0,sy=0;if(shakeT>0){sx=(Math.random()-0.5)*8;sy=(Math.random()-0.5)*8;}
+cx.save();cx.translate(sx,sy);
+var sc=skyc(hikerA),g=cx.createLinearGradient(0,0,0,H);
+g.addColorStop(0,sc[0]);g.addColorStop(1,sc[1]);
+cx.fillStyle=g;cx.fillRect(-10,-10,W+20,H+20);
+var st=Math.max(0,Math.min(1,(hikerA-4200)/3000)),i;
+if(st>0){for(i=0;i<70*st;i++){var sxr=nz(i*3.7)*W,syr=nz(i*7.1)*H*0.7;
+cx.fillStyle="rgba(234,245,255,"+(0.2+0.35*nz(i*1.3+simNow/2400))+")";
+cx.fillRect(sxr,syr,1.6,1.6);}}
+var L=[[0.15,4200,2600,4.2,"#1a2846"],[0.35,2400,2200,8.7,"#111b32"]],li,x;
+for(li=0;li<2;li++){var par=L[li][0];cx.fillStyle=L[li][4];cx.beginPath();
+var first=true;
+for(x=-20;x<=W+22;x+=14){var xw=camX+(x-0.34*W)/(PX*par);
+var crest=L[li][1]+L[li][2]*(1-Math.abs(2*nz(xw/5200+L[li][3])-1));
+var yy=sY(crest,par);if(first){cx.moveTo(x,yy);first=false;}else cx.lineTo(x,yy);}
+cx.lineTo(W+20,H+40);cx.lineTo(-20,H+40);cx.closePath();cx.fill();}
+var fade=Math.max(0,Math.min(1,(6200-hikerA)/2200));
+if(fade>0){var bp=0.06,bx=sX(TOTX,bp),size=(90+320*Math.min(1,camX/TOTX)),by=sY(4600,0.2)-size;
+cx.globalAlpha=fade;
+cx.fillStyle="#16233f";cx.beginPath();cx.moveTo(bx,by);
+cx.lineTo(bx-size*0.62,by+size);cx.lineTo(bx+size*0.62,by+size);cx.closePath();cx.fill();
+cx.fillStyle="rgba(210,228,248,0.92)";cx.beginPath();cx.moveTo(bx,by);
+cx.lineTo(bx-size*0.25,by+size*0.4);cx.lineTo(bx+size*0.25,by+size*0.4);cx.closePath();cx.fill();
+cx.strokeStyle="rgba(230,242,255,0.5)";cx.lineWidth=3;cx.beginPath();cx.moveTo(bx,by);
+for(i=1;i<9;i++)cx.lineTo(bx+i*6,by+Math.sin(i*0.9+simNow/700)*4-i*1.0);
+cx.stroke();cx.globalAlpha=1;}
+for(i=0;i<CLOUDS.length;i++){var c=CLOUDS[i];c.x+=dt*0.004;
+var cxp=sX(c.x,0.85),cyp=sY(c.a,0.85);
+if(cxp>-80&&cxp<W+80&&cyp>-60&&cyp<H+60){cx.fillStyle="rgba(214,228,246,0.22)";
+for(var k=0;k<4;k++){cx.beginPath();
+cx.arc(cxp-c.r+k*c.r*0.55,cyp,c.r*0.42,0,6.28);cx.fill();}}}
+var cols=[],gys=[],gas=[];
+for(x=-20;x<=W+22;x+=10){var xw2=camX+(x-0.34*W)/PX,ga=groundAlt(xw2);
+cols.push(x);gas.push(ga);gys.push(sY(ga,1));}
+cx.fillStyle="#0c1220";cx.beginPath();cx.moveTo(cols[0],gys[0]);
+for(i=1;i<cols.length;i++)cx.lineTo(cols[i],gys[i]);
+cx.lineTo(W+20,H+60);cx.lineTo(-20,H+60);cx.closePath();cx.fill();
+var seg=[];
+function flushSnow(){if(seg.length>1){cx.fillStyle="rgba(223,237,253,0.94)";cx.beginPath();
+cx.moveTo(seg[0][0],seg[0][1]);
+for(var q=1;q<seg.length;q++)cx.lineTo(seg[q][0],seg[q][1]);
+for(q=seg.length-1;q>=0;q--)cx.lineTo(seg[q][0],seg[q][1]+20);
+cx.closePath();cx.fill();}seg=[];}
+for(i=0;i<cols.length;i++){if(gas[i]>SNOWL)seg.push([cols[i],gys[i]]);else flushSnow();}
+flushSnow();
+var cell=Math.ceil((camX-0.34*W/PX)/150)*150;
+while(cell<camX+(W*0.7)/PX){var ga2=groundAlt(cell);
+if(ga2>60&&ga2<2400&&nz(cell/97)>(ga2<1800?0.25:0.5)){
+var tx=sX(cell,1),ty=sY(ga2,1),ts=5+nz(cell/53)*5;
+cx.fillStyle="rgba(15,46,44,0.94)";cx.beginPath();
+cx.moveTo(tx,ty-ts*2.1);cx.lineTo(tx-ts*0.8,ty);cx.lineTo(tx+ts*0.8,ty);cx.closePath();cx.fill();}
+if(ga2>5300&&ga2<6200&&nz(cell/71)>0.45){
+var ex=sX(cell,1),ey=sY(ga2,1),es=4+nz(cell/37)*7;
+cx.fillStyle="rgba(190,214,240,0.85)";cx.beginPath();
+cx.moveTo(ex,ey-es*1.4);cx.lineTo(ex-es,ey+2);cx.lineTo(ex+es,ey+2);cx.closePath();cx.fill();}
+cell+=150;}
+var SIGNS=[[1500,"HIGH ALT"],[3500,"VERY HIGH"],[5500,"EXTREME ALT"]];
+for(i=0;i<SIGNS.length;i++){var sxp=sX(xOfA(SIGNS[i][0]),1),syp=sY(groundAlt(xOfA(SIGNS[i][0])),1);
+if(sxp>-40&&sxp<W+40&&syp>-40&&syp<H+40){
+cx.strokeStyle="rgba(150,130,100,0.9)";cx.lineWidth=2;
+cx.beginPath();cx.moveTo(sxp,syp);cx.lineTo(sxp,syp-14);cx.stroke();
+cx.fillStyle="rgba(64,52,38,0.92)";cx.fillRect(sxp-2,syp-22,52,10);
+cx.fillStyle="rgba(234,238,220,0.95)";cx.font="8px -apple-system,Arial";
+cx.fillText(SIGNS[i][1],sxp+1,syp-14);}}
+for(i=0;i<camps.length;i++){var fx=sX(camps[i].x,1),fy=sY(groundAlt(camps[i].x),1);
+if(fx>-30&&fx<W+30&&fy>-30&&fy<H+30)flagPole(fx,fy,camps[i].n,false);}
+var spx=sX(TOTX,1)+12,spy=sY(SUMMIT,1);
+if(spx>-40&&spx<W+70){
+cx.strokeStyle="rgba(234,245,255,0.9)";cx.lineWidth=2;
+cx.beginPath();cx.moveTo(spx,spy);cx.lineTo(spx,spy-24);cx.stroke();
+var PC=["#ff5d73","#ffd98a","#35e0ce","#eaf4ff","#ffd98a"];
+cx.strokeStyle="rgba(200,210,230,0.7)";cx.lineWidth=1;cx.beginPath();cx.moveTo(spx,spy-22);
+for(i=0;i<5;i++)cx.lineTo(spx+4+i*7,spy-22+i*2.2+Math.sin(i+simNow/800)*1.6);
+cx.stroke();
+for(i=0;i<5;i++){var fx2=spx+4+i*7,fy2=spy-22+i*2.2+Math.sin(i+simNow/800)*1.6;
+cx.fillStyle=PC[i];cx.beginPath();cx.moveTo(fx2,fy2);cx.lineTo(fx2+5,fy2+2);cx.lineTo(fx2,fy2+5);cx.closePath();cx.fill();}
+cx.fillStyle="rgba(234,245,255,0.8)";cx.font="bold 9px -apple-system,Arial";
+if(hikerA>7200)cx.fillText("SUMMIT · 8,900 m",spx+8,spy-28);}
+var hgy=sY(groundAlt(camX),1);
+var hp=drawHiker(hgy);
+for(i=puffs.length-1;i>=0;i--){var pu=puffs[i];pu.t+=dt;
+if(pu.t>1000){puffs.splice(i,1);continue;}
+cx.strokeStyle="rgba(230,240,252,"+(0.35*(1-pu.t/1000))+")";cx.lineWidth=1;
+cx.beginPath();cx.arc(pu.x+pu.t/60,pu.y-pu.t/90,2+pu.t/240,0,6.28);cx.stroke();}
+var wy=sY(0,1);
+if(wy>-40&&wy<H+40){cx.fillStyle="rgba(7,74,96,0.55)";cx.fillRect(-10,Math.max(-10,wy),W+20,H+20);
+cx.strokeStyle="rgba(120,225,235,0.6)";cx.lineWidth=2;cx.beginPath();
+for(x=-10;x<=W+10;x+=10)cx.lineTo(x,wy+Math.sin(x/23+simNow/500)*2.5);cx.stroke();}
+if(hikerA<0){cx.fillStyle="rgba(4,50,66,"+Math.min(0.32,-hikerA/60)+")";cx.fillRect(-10,-10,W+20,H+20);}
+drawWeather(dt,wy);
+railDraw();
+for(i=pops.length-1;i>=0;i--){var pp=pops[i];pp.t+=dt;
+if(pp.t>800){pops.splice(i,1);continue;}
+cx.globalAlpha=Math.max(0,1-pp.t/800);
+cx.fillStyle="#ffd98a";cx.font="700 16px -apple-system,Arial";
+cx.fillText(pp.txt,hp.x-14,hp.y-8-pp.t/14);cx.globalAlpha=1;}
+cx.restore();
+}
+function railDraw(){
+var x=16,topY=64,botY=H-26,span=botY-topY;
+cx.strokeStyle="rgba(159,196,236,0.35)";cx.lineWidth=2;
+cx.beginPath();cx.moveTo(x,topY);cx.lineTo(x,botY);cx.stroke();
+var marks=[[START_ALT,"RIVERBED"],[0,"SURFACE"],[1500,"HIGH"],[3500,"V.HIGH"],[5500,"EXTREME"],[8900,"SUMMIT"]];
+cx.fillStyle="rgba(159,196,236,0.55)";cx.font="8px -apple-system,Arial";
+for(var i=0;i<marks.length;i++){var yy=botY-span*((marks[i][0]-START_ALT)/(SUMMIT-START_ALT));
+cx.fillRect(x-3,yy,6,1);cx.fillText(marks[i][1],x+6,yy+3);}
+var my=botY-span*((altM-START_ALT)/(SUMMIT-START_ALT));
+cx.fillStyle="#35e0ce";cx.beginPath();cx.moveTo(x-6,my+5);cx.lineTo(x+6,my+5);cx.lineTo(x,my-5);cx.closePath();cx.fill();
+cx.fillStyle="rgba(53,224,206,0.9)";cx.font="9px -apple-system,Arial";
+cx.fillText(fmtAlt(altM),x+8,my-4);
+}
+function updateCam(dt){
+var target=altM;
+if(mode==="title")target=START_ALT+((simNow%52000)/52000)*(SUMMIT-START_ALT);
+var d=target-hikerA,rate=Math.abs(d)>2500?dt/110:dt/300;
+var mv=d*Math.min(1,rate);hikerA+=mv;
+walkPh+=Math.min(0.5,Math.abs(mv)*PX*0.11);
+if(hikerA>2500&&simNow-lastPuff>1200){lastPuff=simNow;
+puffs.push({x:0.34*W+9,y:sY(groundAlt(xOfA(hikerA)),1)-26,t:0});}}
+function setAltHud(){$("altr").textContent="▲ "+fmtAlt(altM);}
+function step(dt){
+if(dt>60)dt=60;
+if(hitStop>0){hitStop-=dt;draw(0);return;}
+simNow+=dt;
+if(shakeT>0)shakeT-=dt;
+world.bob+=dt/450;
+if(world.burst>0)world.burst=Math.max(0,world.burst-dt*0.7);
+updateCam(dt);
+if(sched.length){var due=[],rest=[],i;
+for(i=0;i<sched.length;i++){if(sched[i].at<=simNow)due.push(sched[i]);else rest.push(sched[i]);}
+if(due.length){due.sort(function(a,b){return a.at-b.at||a.id-b.id;});sched=rest;
+for(i=0;i<due.length;i++)due[i].fn();}}
+if(mode==="play"){tLeft-=dt;
+var f=Math.max(0,tLeft/curTime),bar=$("tbar").firstElementChild;
+bar.style.width=(f*100)+"%";
+bar.style.background=f>0.5?"#35e0ce":(f>0.22?"#ffd98a":"#ff5d73");
+if(tLeft<=0)timeoutMiss();}
+draw(dt);
+}
+var rafLast=0;
+function loop(ts){if(!rafLast)rafLast=ts;var dt=ts-rafLast;rafLast=ts;step(dt);
+if(window.requestAnimationFrame)requestAnimationFrame(loop);}
+bindTap($("start"),function(){startRun();});
+bindTap($("again"),function(){startRun();});
+bindTap($("resume"),function(){resume();});
+bindTap($("review"),function(ev){if(ev.target&&ev.target.id==="resume")return;resume();});
+document.addEventListener("keydown",function(ev){
+var k=ev.key;
+if(mode==="play"&&(k==="1"||k==="2"||k==="3"||k==="4")){var idx=+k-1;
+if(cur&&idx<cur.o.length)choose(idx);return;}
+if(k==="Enter"||k===" "){
+if(mode==="title"||$("title").classList.contains("on")){startRun();}
+else if(mode==="over")startRun();
+else if(mode==="review")resume();
+}
+});
+window.addEventListener("resize",resize);
+window.onerror=function(msg,src,line){var e=$("errov");e.style.display="block";
+e.textContent="⚠ "+msg+" (line "+line+")";return false;};
+resize();
+if(window.requestAnimationFrame&&!window.__SW_TEST)requestAnimationFrame(loop);
+window.__SW={
+step:function(ms){var left=ms;while(left>0){var d=Math.min(16,left);step(d);left-=d;}},
+start:startRun,choose:choose,resume:resume,
+mode:function(){return mode;},deck:DECK,order:ORDER,draw:DRAW,
+cur:function(){return cur;},correctPos:function(){if(!curPerm)return -1;
+for(var i=0;i<curPerm.length;i++)if(curPerm[i]===0)return i;return -1;},
+layersOn:function(){var n=0,ids=[];for(var i=0;i<LAYERS.length;i++)
+if($(LAYERS[i]).classList.contains("on")){n++;ids.push(LAYERS[i]);}return{n:n,ids:ids};},
+lives:function(){return 3-misses;},score:function(){return score;},
+acc:function(){return seen>0?Math.round(100*firstRight/seen):0;},
+seen:function(){return seen;},best:function(){return best;},
+tLeft:function(){return tLeft;},tFor:function(){return curTime;},
+rank:function(){return $("rank").textContent;},alt:function(){return altM;},
+pendSW:function(){return swPend.length;},roundIdx:function(){return roundIdx;},
+queueLen:function(){return curItems?curItems.length:0;},won:function(){return won;}
+};
+/*APP-END*/</script>
+</body>
+</html>
