@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Conference Arcade · NYU Bellevue EM</title>
+<meta name="theme-color" content="#04060f">
+<meta name="description" content="Quick arcade games built from NYU Bellevue EM Wednesday conference. Code Rush, Split Second, and Second Wind — play them on your phone in a few minutes.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Conference Arcade · NYU Bellevue EM">
+<meta property="og:url" content="https://nyubellevueemgames.github.io/Conference-Arcade/">
+<meta property="og:title" content="Conference Arcade · NYU Bellevue EM">
+<meta property="og:description" content="Wednesday conference, turned into quick arcade games. Code Rush · Split Second · Second Wind.">
+<meta property="og:image" content="https://nyubellevueemgames.github.io/Conference-Arcade/arcade-preview.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Conference Arcade — NYU Bellevue Emergency Medicine">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Conference Arcade · NYU Bellevue EM">
+<meta name="twitter:description" content="Wednesday conference, turned into quick arcade games. Code Rush · Split Second · Second Wind.">
+<meta name="twitter:image" content="https://nyubellevueemgames.github.io/Conference-Arcade/arcade-preview.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bungee&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{-webkit-text-size-adjust:100%}
+body{min-height:100%;background:#04060f;color:#eaf4ff;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  line-height:1.5;position:relative;overflow-x:hidden}
+.bg{position:fixed;inset:0;pointer-events:none;z-index:0}
+.bg i{position:absolute;display:block;border-radius:50%;width:70vmax;height:70vmax}
+.bg .a{left:-24vmax;top:-30vmax;background:radial-gradient(circle,rgba(111,216,234,.16) 0%,rgba(111,216,234,0) 62%)}
+.bg .b{right:-26vmax;top:-16vmax;background:radial-gradient(circle,rgba(255,90,110,.13) 0%,rgba(255,90,110,0) 62%)}
+.bg .c{left:50%;margin-left:-35vmax;bottom:-42vmax;background:radial-gradient(circle,rgba(53,224,206,.14) 0%,rgba(53,224,206,0) 62%)}
+.wrap{position:relative;z-index:1;max-width:760px;margin:0 auto;padding:52px 20px 40px}
+.disp{font-family:'Bungee',Impact,'Arial Black',sans-serif;font-weight:400}
+header{text-align:center;margin-bottom:38px}
+.kick{font-size:11px;letter-spacing:3.4px;color:#8fa9c9;text-transform:uppercase;font-weight:700}
+h1{font-size:clamp(38px,10vw,60px);line-height:1.02;margin:14px 0 0;
+  text-shadow:0 0 34px rgba(111,216,234,.42)}
+h1 em{font-style:normal;color:#6fd8ea}
+.sub{font-size:15.5px;color:#a9c3e2;margin-top:16px;max-width:440px;margin-left:auto;margin-right:auto}
+.card{display:block;text-decoration:none;color:inherit;position:relative;
+  border:1px solid var(--dim);border-radius:18px;background:rgba(9,14,26,.78);
+  padding:20px 20px 19px;margin-bottom:16px;transition:transform .16s ease,box-shadow .16s ease,border-color .16s ease}
+.card:hover,.card:focus-visible{transform:translateY(-2px);border-color:var(--ac);
+  box-shadow:0 0 30px var(--glow);outline:none}
+.card:active{transform:translateY(0)}
+.card .name{font-size:clamp(24px,6vw,31px);line-height:1.05;color:#f2f8ff}
+.card .name b{color:var(--ac);font-weight:400}
+.card .tagline{font-size:11px;letter-spacing:2.6px;text-transform:uppercase;
+  color:var(--ac);margin-top:8px;font-weight:700}
+.card .desc{font-size:14.5px;color:#a9c3e2;margin-top:11px}
+.card .meta{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px}
+.card .meta span{border:1px solid var(--dim);border-radius:999px;padding:5px 11px;
+  font-size:10.5px;letter-spacing:1.6px;color:#c2d3e8;background:rgba(255,255,255,.03);font-weight:700}
+.card .go{position:absolute;right:18px;bottom:17px;font-size:11px;letter-spacing:2.4px;
+  color:var(--ac);font-weight:700}
+.cr{--ac:#6fd8ea;--dim:rgba(111,216,234,.32);--glow:rgba(111,216,234,.20)}
+.ss{--ac:#ff7d8d;--dim:rgba(255,125,141,.32);--glow:rgba(255,125,141,.20)}
+.sw{--ac:#35e0ce;--dim:rgba(53,224,206,.32);--glow:rgba(53,224,206,.20)}
+footer{margin-top:30px;text-align:center;font-size:11.5px;line-height:1.65;color:#6d86a6}
+footer b{color:#9fb6d2;font-weight:600}
+@media (max-width:520px){
+  .wrap{padding:38px 16px 32px}
+  .card{padding:18px 16px 40px}
+  .card .go{right:16px;bottom:14px}
+}
+</style>
+</head>
+<body>
+<div class="bg"><i class="a"></i><i class="b"></i><i class="c"></i></div>
+<div class="wrap">
+
+  <header>
+    <div class="kick">NYU Bellevue Emergency Medicine</div>
+    <h1 class="disp">CONFERENCE<br><em>ARCADE</em></h1>
+    <p class="sub">Wednesday conference, turned into quick arcade games. Best on a phone — pick one and go.</p>
+  </header>
+
+  <a class="card cr" href="code-rush/">
+    <div class="name disp">CODE <b>RUSH</b></div>
+    <div class="tagline">The Cardiology Gauntlet</div>
+    <p class="desc">Race the monitor. The rhythm accelerates as your time drains, and every miss degenerates it: sinus → ectopy → VT → flatline. Keep the patient alive to the end.</p>
+    <div class="meta"><span>5 WAVES</span><span>25 QUESTIONS</span><span>3 SHOCKS</span></div>
+    <div class="go">PLAY ▶</div>
+  </a>
+
+  <a class="card ss" href="split-second/">
+    <div class="name disp">SPLIT <b>SECOND</b></div>
+    <div class="tagline">Fast Track · Resus · Gas Lab</div>
+    <p class="desc">Sprint the ED corridor — it forks into two tracks. Tap onto the right one and you burst straight through. Three wrong tracks and the PD wants a word.</p>
+    <div class="meta"><span>24 FORKS</span><span>DRAWN FROM 66</span><span>3 STRIKES</span></div>
+    <div class="go">PLAY ▶</div>
+  </a>
+
+  <a class="card sw" href="second-wind/">
+    <div class="name disp">SECOND <b>WIND</b></div>
+    <div class="tagline">The Conference Ascent</div>
+    <p class="desc">The whole pulmonary day as an Everest — riverbed to the 8,900 m summit, one breath at a time. Tap the right hold before your O₂ reserve runs out.</p>
+    <div class="meta"><span>6 CAMPS</span><span>25 QUESTIONS</span><span>3 DESATS</span></div>
+    <div class="go">PLAY ▶</div>
+  </a>
+
+  <footer>
+    <p>Built from the residency conference series. <b>Educational games — defer to clinical judgment and your attending.</b></p>
+    <p style="margin-top:8px">Scores are logged anonymously to help pick what gets reviewed again. No names, no logins.</p>
+  </footer>
+
+</div>
+</body>
+</html>
